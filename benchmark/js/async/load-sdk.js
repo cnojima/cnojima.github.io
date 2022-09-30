@@ -1,5 +1,6 @@
 import { resetUi } from '../ui/reset-ui.js';
-import { gel } from '../helpers/utils.js';
+import { setEmailErrorMessage } from '../helpers/email.js';
+import { gel, catchErr } from '../helpers/utils.js';
 import { autoFillUUID } from '../helpers/uuid.js';
 import { benchmark, benchmarkState } from '../stubs/data.js';
 import { authFlow } from './auth-flow.js';
@@ -27,6 +28,9 @@ const run = (val, handler) => {
   (head || document.body).appendChild(tag);
 }
 
+const updateBenchmarks = () => gel('benchmark_data').value = JSON.stringify(benchmark, null, 2);
+
+
 export const loadSdk = function() {
   resetUi();
 
@@ -47,42 +51,48 @@ export const loadSdk = function() {
       const adapter = new vcoAdapter();
       
       // init
-      await init(adapter);
+      await init(adapter).catch(catchErr);
+      updateBenchmarks();
       
       // isRecognized
-      authToken = await isRecognized(adapter);
+      authToken = await isRecognized(adapter).catch(catchErr);;
+      updateBenchmarks();
   
       // identity flow
       if (!authToken) {
-        consumerPresent = await authFlow(adapter);
+        consumerPresent = await authFlow(adapter).catch(catchErr);;
+        updateBenchmarks();
       }
   
       if (consumerPresent && consumerPresent.idToken) {
         // getSrcProfile
-        const srcProfiles = await getSrcProfile(adapter, consumerPresent.idToken);
+        const srcProfiles = await getSrcProfile(adapter, consumerPresent.idToken).catch(catchErr);;
+        updateBenchmarks();
   
         // checkout
         if (srcProfiles) {
-          const checkoutSuccess = await checkout(adapter, srcProfiles);
+          const checkoutSuccess = await checkout(adapter, srcProfiles).catch(catchErr);;
+          updateBenchmarks();
   
           if (checkoutSuccess && checkoutSuccess.unbindAppInstance) {
-            await unbind(adapter);
+            await unbind(adapter).catch(catchErr);;
   
             gel('critical_apis').innerHTML = `Critical API timings: ${(benchmark.init + benchmark.isRecognized + benchmark.getSrcProfile) / 1000}s`;
             gel('checkout_apis').innerHTML = `Checkout API timings: ${(benchmark.checkout + benchmark.unbind) / 1000}s`;
+            updateBenchmarks();
           }
         } else {
           console.warn(`intentPayload not correct`);
         }
       } else {
-        alert('email ID invalid for environment');
+        setEmailErrorMessage('Email was not found on this instance.  Check value.');
       }
-    });
+    })
   }
 };
 
-gel('sdk_picker_v1').onchange = loadSdk;
-gel('sdk_picker_v2').onchange = loadSdk;
+// gel('sdk_picker_v1').onchange = loadSdk;
+// gel('sdk_picker_v2').onchange = loadSdk;
 
 gel('go_v1').onclick = () => {
   loadSdk.call(gel('sdk_picker_v1'));

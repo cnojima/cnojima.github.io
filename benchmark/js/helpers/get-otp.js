@@ -2,6 +2,10 @@ import { benchmarkState } from '../stubs/data.js';
 import { fetchReq } from './fetch.js';
 import { extractHostname } from './utils.js';
 
+
+export const canGetOtp = sdkUrl => (sdkUrl.indexOf('vbox') > -1);
+
+
 export async function getOTP() {
   console.info('attempting to retrieve OTP code via API');
 

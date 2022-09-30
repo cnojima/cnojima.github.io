@@ -1,29 +1,44 @@
-import { getOTP } from '../helpers/get-otp.js';
+import { benchmark, benchmarkState } from '../stubs/data.js';
+import { canGetOtp, getOTP } from '../helpers/get-otp.js';
+import { gel } from '../helpers/utils.js';
 
 export async function authFlow(adapter) {
   let otpCode;
   const email = localStorage.getItem('email');
-
+  
+  const identityLookupStart = Date.now();
   const res = await adapter.identityLookup({
     identityProvider: "SRC",
     identityValue: email,
     type: "EMAIL"
   });
+  benchmark.identityLookup = Date.now() - identityLookupStart;
   
   if (res.consumerPresent) {
+    const initiateIdentityValidationStart = Date.now();
     const res = await initiateIdentityValidation(adapter);
+    benchmark.initiateIdentityValidation = Date.now() - initiateIdentityValidationStart;
     
     if (res !== false) {
-      otpCode = await getOTP();
+      if (canGetOtp(benchmarkState.sdkUrl)) {
+        otpCode = await getOTP();
+      }
 
       // manually enter for sandbox+
       if (!otpCode) {
         otpCode = prompt('Enter OTP');
       }
 
-      return await completeIdentityValidation(adapter, {
+      const completeIdentityValidationStart = Date.now();
+      const res = await completeIdentityValidation(adapter, {
         validationData: otpCode
       });
+      benchmark.completeIdentityValidation = Date.now() - completeIdentityValidationStart;
+
+      gel('auth_complete').checked = true;
+      gel('auth_complete_timing').innerHTML = `${(benchmark.identityLookup + benchmark.initiateIdentityValidation + benchmark.completeIdentityValidation) / 1000}s`;
+      gel('auth_breakdown').innerHTML = `[identityLookup: ${benchmark.identityLookup}ms]<br/>[initiateIdentityValidation: ${benchmark.initiateIdentityValidation}ms]<br/>[completeIdentityValidation: ${benchmark.completeIdentityValidation}ms]`;
+      return res;
     }
   } else {
     console.warn(`${email} not present`);
