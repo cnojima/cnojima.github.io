@@ -1,491 +1,77 @@
 <html>
 
 <head>
-    <title>SRC SDK Tester</title>
-    <script src="https://code.jquery.com/jquery-3.6.1.slim.min.js"></script>
+    <title>SRC Headless Benchmark Tool</title>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.1.slim.min.js"></script> -->
     <link href="css/styleSheet.css" rel="stylesheet" type="text/css">
     <!-- <link href="css/styleSheet.css" rel="stylesheet" type="text/css"> -->
     <!-- Replace next two lines if the less is not working in any browser. Rename the .less file with .css -->
     <link rel="stylesheet/less" type="text/css" href="css/styles.less" />
+
+    <style>
+        .json {
+            border: 1px solid #ff0000;
+        }
+        .textarea,
+        .jsoncontent {
+            width: 49%;
+            height: 400px;
+            border: 1px solid #ff0000;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="topnav">
-        <a href="srcsdktester/SDKTesterHome.html" onclick="parent.location=location.origin +'/srcsdktester/SDKTesterHome.html'; return false;">
-            HEADLESS INTEGRATED - SRC SDK TESTING
-        </a>
-    </div>
-    <div class="top">
-        <div id='emailAddress'>
-            <div class="emailLabel">
-                <label class="email"><b> Email Address: </b></label>
-            </div>
-            <div class="emailInput">
-                <input id="emailInput" placeholder="Enter email address" value='senthilr@mailinator.com'
-                    onfocusout="autoIdLookupEmailAddress(),autoFillEmailAddressInCheckoutApirequest()">
-            </div>
-        </div>
-        <br>
-        <div id="radioButtons">
-            <div>
-                <p>Select the below option if SRC-i want to create its own DCF window/Iframe</p>
-            </div>
-            <div>
-                <input type="radio" name="rating" value="CreatePopup" onchange="openDcfWindow(this)"> Create Popup
-                <input type="radio" name="rating" value="CreateIframe" onchange="openDcfWindow(this)"> Create Iframe
-            </div>
-        </div>
-    </div>
+    <div class="flex">
+        <select id="sdk_picker_v1"></select>
+        <select id="sdk_picker_v2"></select>
+        
+        
+        <label for="#emailInput">
+            Email:
+            <input id="emailInput" placeholder="Enter email address" value='senthilr@mailinator.com' />
+        </label>
+        <textarea class="textarea initInput jsoncontent" id="initInput"></textarea>
+        <pre readonly class="out textarea isRegOutput" id="initOutput" ></pre>
 
+        <textarea placeholder="No Input Required!" readonly="readonly" unselectable="on" class="textarea noselect" id="isRegInput"></textarea>
+        <pre readonly class="out textarea isRegOutput" id="isRegOutput" ></pre>
+
+    </div>
+    <!-- 
+    <input type="radio" name="rating" value="CreatePopup" onchange="openDcfWindow(this)"> Create Popup
+    <input type="radio" name="rating" value="CreateIframe" onchange="openDcfWindow(this)"> Create Iframe
+ -->
     <div class="main">
-        <div>
-            <h3>3.1 Initialize SRC SDK</h3>
-        </div>
-        <div class="form">
-            <div>
-                <textarea class="textarea initInput jsoncontent" id="initInput">
-                        {
-                            "srciTransactionId": "5271f938-c9b6-42d2-89ab-9c4bd67118c5",
-                            "srciDpaId": "DPAID",
-                            "srcInitiatorId": "[A-Fa-f0-9|A-Fa-f0-9]{8}\\-([A-Fa-f0-9|A-Fa-f0-9]{4}\\-){3}[A-Fa-f0-9|A-Fa-f0-9]{12}",
-                            "dpaData": {
-                                "srcDpaId" : "",
-                                "dpaPresentationName": "Disney Online",
-                                "dpaUri" : "http://www.disneyonline.com"
-                            },
-                            "dpaTransactionOptions" : {
-                                "dpaLocale" : "US",
-                                "dpaAcceptedBillingCountries" : ["US","CA"],
-                                "dpaAcceptedShippingCountries" : ["US","CA"],
-                                "dpaBillingPreference" : "FULL",
-                                "dpaShippingPreference" : "FULL",
-                                "consumerNameRequested" : true,
-                                "consumerEmailAddressRequested" : true,
-                                "consumerPhoneNumberRequested" : true,
-                                "paymentOptions" : {
-                                    "dpaDynamicDataTtlMinutes" : 2,
-                                    "dynamicDataType" : "DYNAMIC_CARD_SECURITY_CODE",
-                                    "dpaPanRequested" : false
-                                },
-                                "reviewAction" : "continue",
-                                "transactionType" : "PURCHASE",
-                                "orderType" : "REAUTHORIZATION",
-                                "payloadTypeIndicator" : "SUMMARY",
-                                "transactionAmount" : {
-                                    "transactionAmount" : "99.95",
-                                    "transactionCurrencyCode" : "USD"
-                                },
-                                "merchantOrderId" : "28b1b61b-bbec-4637-b78f-33babc3b5187",
-                                "merchantCategoryCode" : "3000",
-                                "merchantCountryCode" : "US",
-                                "threeDsPreference": "NONE",
-                                "threeDsInputData" : {
-                                    "requestorId" : "requestorId",
-                                    "acquirerId" : "acquirerId",
-                                    "acquirerMid" : "acquirerMid"
-                                },
-                                "customInputData":{
-                                    "dpaIntegrationType":"PSP"
-                                 }
-                            }
-                        }
-                    </textarea>
-            </div>
-            <div>
-                <pre readonly class="out textarea initOutput" id="initOutput" style="border: none">
-                </pre>
-            </div>
-            <div>
-                <button class="goButton" id="callInit" onClick="initCall()">
-                    CALL Init()
-                </button>
-            </div>
-        </div>
+        <textarea class="textarea jsoncontent idLookupInput" id="idLookupInput" onfocus="autoIdLookupEmailAddress()"></textarea>
+        <pre readonly class="out textarea idLookupOutput" id="idLookupOutput" ></pre>
+        <pre readonly class="out textarea initIdValidationOutput" id="initIdValidationOutput" ></pre>
+        <textarea class="textarea jsoncontent completeIdValidationInput" id="completeIdValidationInput">
+            {
+                "validationData": "123456"
+            }
+        </textarea>
+        <pre readonly class="out textarea completeIdValidationOutput" id="completeIdValidationOutput" ></pre>
+        <textarea class="textarea getCustProfileInput" id="getCustProfileInput"></textarea>
+        <pre readonly class="out textarea getCustProfileOutput" id="getCustProfileOutput" ></pre>
 
-        <div>
-            <h3>3.2 isRecognized</h3>
-        </div>
-        <div class="form">
-            <div>
-                <textarea placeholder="No Input Required!" readonly="readonly" unselectable="on" class="textarea noselect"
-                    id="isRegInput"></textarea>
-            </div>
-            <div>
-                <pre readonly class="out textarea isRegOutput" id="isRegOutput" style="border: none">
-                        </pre>
-            </div>
-            <div>
-                <button class="goButton" id="callIsReg" onClick="isRecognizedCall()">
-                    CALL isRecognized()
-                </button>
-            </div>
-        </div>
-        <br />
-        <div>
-            <details>
-                <summary style="color:saddlebrown"><b>Identity Lookup & OTP
-                        Flow:>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>></b></summary>
-                <div style="border: 1px solid saddlebrown">
-                    <div>
-                        <h3>3.4 Identity Lookup</h3>
-                    </div>
-                    <div class="form">
-                        <div>
-                            <textarea class="textarea jsoncontent idLookupInput" id="idLookupInput" onfocus="autoIdLookupEmailAddress()">
-                                    {
-                                        "identityProvider": "SRC",
-                                        "identityValue": "senthilr@mailinator.com",
-                                        "type": "EMAIL"
-                                    }
-                                </textarea>
-                        </div>
-                        <div>
-                            <pre readonly class="out textarea idLookupOutput" id="idLookupOutput" style="border: none">
-                                        </pre>
-                        </div>
-                        <div>
-                            <button class="goButton" id="callIdLookup" onClick="identityLookupCall()">
-                                CALL idLookup()
-                            </button>
-                        </div>
-                    </div>
+        <input type="checkbox" id="SrciWindowCheckbox" value="SrciWindow" />Launch DCF in SRC-i popup window
+        <input type="checkbox" id="SrciIframeCheckbox" value="SrciWindow" />Launch DCF in SRC-i iframe window
+
+        <button class="buttonLink" id="fillSelectCardInfoButton" onClick="appendComplianceSettings()">Append ComplianceSettings</button>
+        <textarea class="textarea jsoncontent selectCardInput" id="selectCardInput"></textarea>
+        <pre readonly class="out textarea selectCardOutput" id="selectCardOutput" ></pre>
+
+        <textarea class="textarea jsoncontent selectCardInput" id="unBindInput"></textarea>
+        <pre readonly class="out textarea selectCardOutput" id="unBindOutput" ></pre>
 
 
-                    <div>
-                        <h3>3.5 Initiate Identity Validation</h3>
-                    </div>
-                    <div class="form">
-                        <div>
-                            <textarea placeholder="No Input Required!" unselectable="on" class="textarea noselect initIdValidationInput"
-                                id="initIdValidationInput"></textarea>
-                        </div>
-                        <div>
-                            <pre readonly class="out textarea initIdValidationOutput" id="initIdValidationOutput" style="border: none">
-                                            </pre>
-                        </div>
-                        <div>
-                            <button class="goButton" id="callInitIdValidation" onClick="initiateIdentityValidationCall()">
-                                CALL initiateIdentityValidation()
-                            </button>
-                        </div>
-                    </div>
-
-
-                    <div>
-                        <h3>3.6 Complete Identity Validation Process</h3>
-                    </div>
-                    <div>
-                        <button class="getOtpButton" id="getotp">Get OTP</button>
-                    </div>
-                    <div class="form">
-                        <div>
-                            <textarea class="textarea jsoncontent completeIdValidationInput" id="completeIdValidationInput">
-                                {
-                                    "validationData": "123456"
-                                }
-                            </textarea>
-                        </div>
-                        <div>
-                            <pre readonly class="out textarea completeIdValidationOutput" id="completeIdValidationOutput"
-                                style="border: none">
-                                                </pre>
-                        </div>
-                        <div>
-                            <button class="goButton" id="callCompleteIdValidation" onClick="completeIdentityValidationCall()">
-                                CALL CompleteIdValidation()
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </details>
-        </div>
-        <br />
-
-        <div>
-            <h3>3.3 Get SRC Profile</h3>
-        </div>
-        <div class="form">
-            <div>
-                <textarea class="textarea getCustProfileInput" id="getCustProfileInput"></textarea>
-            </div>
-            <div>
-                <pre readonly class="out textarea getCustProfileOutput" id="getCustProfileOutput" style="border: none">
-                                            </pre>
-            </div>
-            <div>
-                <button class="goButton" id="callGetCustProfile" onClick="getSrcProfileCall()">
-                    CALL getSrcProfile()
-                </button>
-            </div>
-        </div>
-
-        <br />
-        <div>
-            <details>
-                <summary style="color:saddlebrown"><b>Add New Card
-                        Flow:>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>></b>
-                </summary>
-                <br />
-                <div style="border: 1px solid saddlebrown">
-                    <div>
-                        <h3>3.7 Enroll Card</h3>
-                    </div>
-                    <div class="cardType">
-                        <div>
-                            <select id="cardType">
-                                <option value="visa">VISA</option>
-                                <option value="amex">AMEX</option>
-                                <option value="disc">DISCOVER</option>
-                                <option value="mc">MASTERCARD</option>
-                            </select>
-                        </div>
-                        <div>
-                            <button class="goButton" id="fillCardInfoButtonPSP">Get Card Information</button>
-                        </div>
-                    </div>
-                    <div>
-                        <p style="color:red;">
-                            The below JSON object will be used for PANJW encryption. <BR>
-                            Update that testarea with custom JSON object if required. That will be used for encryption. </p>
-                            <div class="form">
-                                <div>
-
-                                    <textarea class="textarea jsoncontent cardInformationInput" id="pspCardInformation">
-                                        {
-                                            "card": {
-                                                "cardSecurityCode": "XXX",
-                                                "cardholderFullName": "XXXX XXXX",
-                                                "panExpirationMonth": "",
-                                                "panExpirationYear": "",
-                                                "primaryAccountNumber": "XXXXXXXXXXXXXXXX",
-                                                "cardholderFirstName": "",
-                                                "cardholderLastName": "",
-                                                "billingAddress": {
-                                                    "addressId": "",
-                                                    "name": "",
-                                                    "line1": "",
-                                                    "line2": "",
-                                                    "line3": "",
-                                                    "city": "",
-                                                    "state": "",
-                                                    "countryCode": "",
-                                                    "zip": "",
-                                                    "createTime": "",
-                                                    "lastUsedTime": ""
-                                                },
-                                                "paymentAccountReference": ""
-                                            }
-                                        }
-                                    </textarea>
-                                </div>
-                                <div>
-                                    <button class="goButton" id="pspAddToCheckoutAPIButton">Encrypt & Add to Checkout() API</button>
-                                </div>
-                            </div>
-                    </div>
-                    <br />
-                    <br />
-                </div>
-            </details>
-        </div>
-        <br />
-        <br />
-
-        <div>
-            <h3>3.8 Checkout</h3>
-        </div>
-        <br />
-        <div class="cardType">
-            <div>
-                <select id="CardList">
-                    <option value="Choose Card">Choose Card</option>
-                </select>
-            </div>
-            <div>
-                <input type="checkbox" id="SrciWindowCheckbox" value="SrciWindow">Launch DCF in SRC-i popup window
-            </div>
-            <div>
-                <input type="checkbox" id="SrciIframeCheckbox" value="SrciWindow">Launch DCF in SRC-i iframe window
-            </div>
-            <div style="display: none;">
-                <input type="checkbox" id="maSimulator">Simulate MA srci
-            </div>
-            <div>
-                <button class="goButton" id="fillSelectCardInfoButton" onClick="selectCard()">Apply Selected Card</button>
-            </div>
-        </div>
-        <br/>
-        <br/>
-        <div>
-            <button class="buttonLink" id="fillSelectCardInfoButton" onClick="appendComplianceSettings()">Append ComplianceSettings</button>
-        </div>
-        <div class="form">
-            <div>
-                <textarea class="textarea jsoncontent selectCardInput" id="selectCardInput">
-                    {
-                        "srcCorrelationId": "",
-                        "srciTransactionId": "",
-                        "srcDigitalCardId": "",
-                        "encryptedCard": "",
-                        "idToken": "",
-                        "windowRef": "",
-                        "consumer":{
-                            "emailAddress": "ashok.vbox28@mailinator.com",
-                             "consumerIdentity":{
-                                "identityProvider":"SRC", 
-                                "identityType":"EMAIL_ADDRESS",
-                                "identityValue":"ashok.vbox28@mailinator.com"
-                             },
-                             "mobileNumber":{
-                                "phoneNumber":"",
-                                "countryCode":"1"
-                            },
-                            "nationalIdentifier": "USA",
-                            "countryCode": "US",
-                            "languageCode": "EN",
-                            "firstName": "PSP",
-                            "lastName": "Tester",
-                            "fullName": "Psp Tester"
-                        },
-                        "dpaTransactionOptions" : {
-                            "dpaLocale" : "US",
-                            "dpaAcceptedBillingCountries" : ["US","CA"],
-                            "dpaAcceptedShippingCountries" : ["US","CA"],
-                            "dpaBillingPreference" : "ALL",
-                            "dpaShippingPreference" : "ALL",
-                            "consumerNameRequested" : true,
-                            "consumerEmailAddressRequested" : true,
-                            "consumerPhoneNumberRequested" : true,
-                            "paymentOptions" : {
-                                "dpaDynamicDataTtlMinutes" : 2,
-                                "dynamicDataType" : "TAVV",
-                                "dpaPanRequested" : false
-                            },
-                            "reviewAction" : "continue",
-                            "checkoutDescription" : "Sample checkout",
-                            "transactionType" : "PURCHASE",
-                            "orderType" : "REAUTHORIZATION",
-                            "payloadTypeIndicator" : "SUMMARY",
-                            "transactionAmount" : {
-                                "transactionAmount" : "99.95",
-                                "transactionCurrencyCode" : "USD"
-                            },
-                            "merchantOrderId" : "ABC12345",
-                            "merchantCategoryCode" : "merchantCategoryCode",
-                            "merchantCountryCode" : "US",
-                            "threeDsInputData" : {
-                                "requestorId" : "requestorId",
-                                "acquirerId" : "acquirerId",
-                                "acquirerMid" : "acquirerMid"
-                            },
-                            "customInputData":{
-                                "dpaIntegrationType":"PSP"
-                            }
-                        },
-                        "payloadTypeIndicatorCheckout": "SUMMARY",
-                        "recipientIdCheckout": "",
-                        "payloadTypeIndicatorPayload": "SUMMARY",
-                        "recipientIdPayload": "",
-                        "assuranceData": {
-                            "verificationData":[{
-                            "verificationType": "CARDHOLDER",
-                            "verificationEntity": "01",
-                            "verificationMethod": "01",
-                            "verificationResults": "01",
-                            "verificationTimestamp": "1646416550"
-                            }]
-                        },
-                        "srciActionCode": "NEW_USER" 
-                    }
-                </textarea>
-            </div>
-            <div>
-                <pre readonly class="out textarea selectCardOutput" id="selectCardOutput" style="border: none">
-                                                </pre>
-            </div>
-            <div>
-                <button class="goButton" id="callSelectCard" onClick="checkoutCall()">
-                    CALL checkout()
-                </button>
-            </div>
-        </div>
-        <br />
-        <br />
-        <div>
-            <h3>3.9 unbindAppInstance</h3>
-        </div>
-        <div class="form">
-            <div>
-                <textarea class="textarea jsoncontent selectCardInput" id="unBindInput">
-                    {
-                    }
-                </textarea>
-            </div>
-            <div>
-                <pre readonly class="out textarea selectCardOutput" id="unBindOutput" style="border: none">
-                                                </pre>
-            </div>
-            <div>
-                <button class="goButton" onClick="unBindCall()">
-                    CALL unbindAppInstance()
-                </button>
-            </div>
-        </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-
-
-        <script src="js/less.min.js"></script>
         <!-- Dynamically load script based on user selection -->
+        <script async src="js/driver-perf.js" type="module"></script>
+        <!-- <script async src="js/getOTP.js" type="module"></script> -->
+
         <script>
-            var newPopupRef, dcfiframe;
-            function loadScripts(array, callback) {
-                var loader = function (src, handler) {
-                    var script = document.createElement("script");
-                    script.src = src[0];
-                    script.type = src[1];
-                    script.async = false;
-                    script.onload = script.onreadystatechange = function () {
-                        script.onreadystatechange = script.onload = null;
-                        handler();
-                    }
-                    var head = document.getElementsByTagName("head")[0];
-                    (head || document.body).appendChild(script);
-                };
-                (function run() {
-                    if (array.length != 0) {
-                        loader(array.shift(), run);
-                    } else {
-                        callback && callback();
-                    }
-                })();
-            }
-    
-            var srciDomain = localStorage.getItem('srciDomain');
-            var url;
-            if (srciDomain) {
-                url = srciDomain;
-            } else if ((location.origin).includes('localhost')) {
-                url = "https://vbox671.secure.checkout.visa.com/checkout-widget/resources/js/src-i-adapter/visaSdk.js";
-                localStorage.setItem('srciDomain', 'vbox671');
-            } else {
-                url = location.origin + "/checkout-widget/resources/js/src-i-adapter/visaSdk.js";
-                localStorage.setItem('srciDomain', url);
-            }
-            
-            loadScripts([
-                [url, "text/javascript"],
-                ["js/driver-perf.js", "text/javascript"],
-                ["transpiled/PANJwEncription.js", "text/javascript"],
-                ["js/getCardInformation.js", "module"],
-                ["js/getOTP.js", "module"],
-            ], function () {
-                console.log('All scripts are loaded');
-            });
-    
+          
             function openDcfWindow(element) {
                 if(element.value == 'CreateIframe') {
                     dcfiframe = document.createElement('iframe');
