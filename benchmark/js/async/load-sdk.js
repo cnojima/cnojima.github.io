@@ -1,3 +1,4 @@
+import { resetUi } from '../helpers/reset-ui.js';
 import { gel } from '../helpers/utils.js';
 import { autoFillUUID } from '../helpers/uuid.js';
 import { benchmark } from '../stubs/data.js';
@@ -27,6 +28,8 @@ const run = (val, handler) => {
 }
 
 export const loadSdk = function() {
+  resetUi();
+
   const val = this.value;
   const key = this.options[this.selectedIndex].innerHTML.trim();
 
