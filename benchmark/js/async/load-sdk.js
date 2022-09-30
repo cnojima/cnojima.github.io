@@ -1,7 +1,8 @@
-import { resetUi } from '../helpers/reset-ui.js';
-import { gel } from '../helpers/utils.js';
+import { resetUi } from '../ui/reset-ui.js';
+import { setEmailErrorMessage } from '../helpers/email.js';
+import { gel, catchErr } from '../helpers/utils.js';
 import { autoFillUUID } from '../helpers/uuid.js';
-import { benchmark } from '../stubs/data.js';
+import { benchmark, benchmarkState } from '../stubs/data.js';
 import { authFlow } from './auth-flow.js';
 import { checkout } from './checkout.js';
 import { getSrcProfile } from './get-src-profile.js';
@@ -27,55 +28,75 @@ const run = (val, handler) => {
   (head || document.body).appendChild(tag);
 }
 
+const updateBenchmarks = () => gel('benchmark_data').value = JSON.stringify(benchmark, null, 2);
+
+
 export const loadSdk = function() {
   resetUi();
 
   const val = this.value;
   const key = this.options[this.selectedIndex].innerHTML.trim();
 
-  run(val, async () => {
-    let authToken;
-    let consumerPresent;
-
-    autoFillUUID(key);
-
-    // Default selection: Visa is the SRC-i
-    const vcoAdapter = window.vAdapters.VisaSRCI;
-    const adapter = new vcoAdapter();
-    
-    // init
-    await init(adapter);
-    
-    // isRecognized
-    authToken = await isRecognized(adapter);
-
-    // identity flow
-    if (!authToken) {
-      consumerPresent = await authFlow(adapter);
-    }
-
-    if (consumerPresent && consumerPresent.idToken) {
-      // getSrcProfile
-      const srcProfiles = await getSrcProfile(adapter, consumerPresent.idToken);
-
-      // checkout
-      if (srcProfiles) {
-        const checkoutSuccess = await checkout(adapter, srcProfiles);
-
-        if (checkoutSuccess && checkoutSuccess.unbindAppInstance) {
-          await unbind(adapter);
-
-          gel('critical_apis').innerHTML = `Critical API timings: ${(benchmark.init + benchmark.isRecognized + benchmark.getSrcProfile) / 1000}s`;
-          gel('checkout_apis').innerHTML = `Checkout API timings: ${(benchmark.checkout + benchmark.unbind) / 1000}s`;
+  if (val) {
+    benchmarkState.sdkUrl = val;
+  
+    run(val, async () => {
+      let authToken;
+      let consumerPresent;
+  
+      autoFillUUID(key);
+  
+      // Default selection: Visa is the SRC-i
+      const vcoAdapter = window.vAdapters.VisaSRCI;
+      const adapter = new vcoAdapter();
+      
+      // init
+      await init(adapter).catch(catchErr);
+      updateBenchmarks();
+      
+      // isRecognized
+      authToken = await isRecognized(adapter).catch(catchErr);;
+      updateBenchmarks();
+  
+      // identity flow
+      if (!authToken) {
+        consumerPresent = await authFlow(adapter).catch(catchErr);;
+        updateBenchmarks();
+      }
+  
+      if (consumerPresent && consumerPresent.idToken) {
+        // getSrcProfile
+        const srcProfiles = await getSrcProfile(adapter, consumerPresent.idToken).catch(catchErr);;
+        updateBenchmarks();
+  
+        // checkout
+        if (srcProfiles) {
+          const checkoutSuccess = await checkout(adapter, srcProfiles).catch(catchErr);;
+          updateBenchmarks();
+  
+          if (checkoutSuccess && checkoutSuccess.unbindAppInstance) {
+            await unbind(adapter).catch(catchErr);;
+  
+            gel('critical_apis').innerHTML = `Critical API timings: ${(benchmark.init + benchmark.isRecognized + benchmark.getSrcProfile) / 1000}s`;
+            gel('checkout_apis').innerHTML = `Checkout API timings: ${(benchmark.checkout + benchmark.unbind) / 1000}s`;
+            updateBenchmarks();
+          }
+        } else {
+          console.warn(`intentPayload not correct`);
         }
       } else {
-        console.warn(`intentPayload not correct`);
+        setEmailErrorMessage('Email was not found on this instance.  Check value.');
       }
-    } else {
-      alert('email ID invalid for environment');
-    }
-  });
+    })
+  }
 };
 
-gel('sdk_picker_v1').onchange = loadSdk;
-gel('sdk_picker_v2').onchange = loadSdk;
+// gel('sdk_picker_v1').onchange = loadSdk;
+// gel('sdk_picker_v2').onchange = loadSdk;
+
+gel('go_v1').onclick = () => {
+  loadSdk.call(gel('sdk_picker_v1'));
+};
+gel('go_v2').onclick = () => {
+  loadSdk.call(gel('sdk_picker_v2'));
+};

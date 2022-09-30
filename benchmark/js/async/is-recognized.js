@@ -1,3 +1,4 @@
+
 import { catchErr, gel } from "../helpers/utils.js";
 import { benchmark } from "../stubs/data.js";
 
@@ -16,7 +17,7 @@ export async function isRecognized(adapter) {
 
   if (ret.idTokens) {
     token = ret.idTokens[0];
-  } else {
+  } else if(ret.recognized === false) {
     gel('is_recognized_complete_timing').innerHTML = `${benchmark.isRecognized}ms (unrecognized)`;
   }
 

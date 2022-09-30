@@ -243,7 +243,14 @@ export const srcProfiles = [];
 export const benchmark = {
   init: 0,
   isRecognized: 0,
+  identityLookup: 0,
+  initiateIdentityValidation: 0,
+  completeIdentityValidation: 0,
   getSrcProfile: 0,
   checkout: 0,
   unbind: 0,
+};
+
+export const benchmarkState = {
+  sdkUrl: '',
 };

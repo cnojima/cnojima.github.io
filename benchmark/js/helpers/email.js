@@ -31,7 +31,16 @@ function autoFillEmailAddressInCheckoutApirequest(email) {
   }
 }
 
+
+export const setEmailErrorMessage = (msg) => {
+  gel('email_error_message').innerHTML = msg;
+}
+
+// bootstrap
 gel('emailInput').onblur = function populateEmail() {
   const email = this.value;
   emailSetter(email);
+}
+gel('emailInput').onfocus = () => {
+  gel('email_error_message').innerHTML = '';
 }

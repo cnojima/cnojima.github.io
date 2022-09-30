@@ -1,11 +1,6 @@
-const genId = () =>
-    Math.random()
-    .toString(36)
-    .substring(7);
-
+const genId = () => Math.random().toString(36).substring(7);
 export const systemCorrelationId = `1_1492561111_766_48_${genId()}_CHECKOUT-WIDGET`;
 export const systemSessionId = `vme_qa_001${genId()}`;
-// export const systemSessionId = 'allowme';
 
 export var fetchReq = function (options) {
     const {
@@ -26,7 +21,7 @@ export var fetchReq = function (options) {
     } else {
         finalBody = JSON.stringify(body);
     }
-    console.log("Final Body data", body);
+    // console.log("Final Body data", body);
     return fetch(
             url,
             Object.assign({}, {
@@ -54,7 +49,7 @@ function handleJsonResponse(res) {
     res.headers.forEach(function (v, k) {
         headers[k] = v;
     });
-    console.log('headers - ' + JSON.stringify(headers));
+    // console.log('headers - ' + JSON.stringify(headers));
     return (
         res
         .json()
