@@ -1,0 +1,25 @@
+{
+  "name": "src-benchmark",
+  "version": "1.0.0",
+  "description": "SRC/Click-2-Pay Client Performance Benchmarking Toolchain",
+  "main": "index.js",
+  "scripts": {
+    "benchmark": "xk6-browser run --out json=metrics.json scripts/sbx.js",
+    "codegen": "npx playwright codegen ",
+    "sanity": "xk6-browser run --out json=metrics.json sanity.js"
+  },
+  "keywords": [
+    "SRC"
+  ],
+  "author": "Chris Nojima",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "mkdirp": "^1.0.4",
+    "playwright": "^1.26.0"
+  },
+  "dependencies": {
+    "express": "^4.18.1",
+    "expressjs": "^1.0.1",
+    "request": "^2.88.2"
+  }
+}

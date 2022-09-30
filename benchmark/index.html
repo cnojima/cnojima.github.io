@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>SRC Headless Benchmark Tool</title>
+  <style>
+    .json {
+      border: 1px solid #ff0000;
+    }
+    .textarea,
+    .jsoncontent {
+      width: 49%;
+      height: 200px;
+      border: 1px solid #ff0000;
+    }
+    
+    div.required label,
+    div.progress label {
+      display: block;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Required</h1>
+  <div class="required" id="pregen"></div>
+  <div class="required">
+    <label for="#emailInput">
+      Email: <input id="emailInput" placeholder="Enter email address" value="mnojima@visa.com" />
+    </label>
+
+    <!-- <label class="required">
+      <select multiple>
+        <option>Divya.vbox444@mailinator.com</option>
+        <option>mnojima+adyen01@visa.com</option>
+      </select>
+    </label> -->
+
+    <label for="#sdk_picker_v1">
+      Visa SDK V1:
+      <select id="sdk_picker_v1"></select>
+    </label>
+
+    <label for="#sdk_picker_v1">
+      Visa SDK V2:
+      <select id="sdk_picker_v2"></select>
+    </label>
+  </div>
+
+  <h1>Progress & Benchmarks</h1>
+  <div class="progress">
+    <label for="#init_complete">
+      <input type="checkbox" id="init_complete" disabled /> init() complete <span id="init_complete_timing" class="timing"></span>
+    </label>
+
+    <label for="#is_recognized_complete">
+      <input type="checkbox" id="is_recognized_complete" disabled /> isRecognized() complete <span id="is_recognized_complete_timing" class="timing"></span>
+    </label>
+
+    <label for="#get_src_profile_complete">
+      <input type="checkbox" id="get_src_profile_complete" disabled /> getSrcProfile() complete <span id="get_src_profile_complete_timing" class="timing"></span>
+    </label>
+
+    <label for="#checkout_complete">
+      <input type="checkbox" id="checkout_complete" disabled /> checkout() complete <span id="checkout_complete_timing" class="timing"></span>
+    </label>
+
+    <label for="#unbind_complete">
+      <input type="checkbox" id="unbind_complete" disabled /> unbind() complete <span id="unbind_complete_timing" class="timing"></span>
+    </label>
+
+    <label id="critical_apis"></label>
+    <label id="checkout_apis"></label>
+  </div>
+
+  <script async src="js/driver-perf.js" type="module"></script>
+  </body>
+</html>

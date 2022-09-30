@@ -1,0 +1,6 @@
+.DS_Store
+node_modules
+example-chromium.png
+metrics.json
+srcsdktester-backup
+xk6-browser
