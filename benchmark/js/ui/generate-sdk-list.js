@@ -1,6 +1,7 @@
 import { cel, gel } from '../helpers/utils.js';
 
 const envs = {
+  "--- Pick": "",
   CERT: "https://cert.secure.checkout.visa.com",
   CERT1: "https://cert1.secure.checkout.visa.com",
   ICL: "https://demo.icl.visa.com",

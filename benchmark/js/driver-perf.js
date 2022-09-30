@@ -1,4 +1,5 @@
 import { buildSdkPicker } from './ui/generate-sdk-list.js';
+import { bindComplianceToggle } from './ui/bind-compliance.js';
 import { loadSdk } from './async/load-sdk.js';
 
 const gel = id => document.getElementById(id);
@@ -11,3 +12,4 @@ if (lsEmail) {
 }
 
 buildSdkPicker();
+bindComplianceToggle();

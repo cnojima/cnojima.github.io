@@ -33,51 +33,60 @@ export const loadSdk = function() {
   const val = this.value;
   const key = this.options[this.selectedIndex].innerHTML.trim();
 
-  benchmarkState.sdkUrl = val;
-
-  run(val, async () => {
-    let authToken;
-    let consumerPresent;
-
-    autoFillUUID(key);
-
-    // Default selection: Visa is the SRC-i
-    const vcoAdapter = window.vAdapters.VisaSRCI;
-    const adapter = new vcoAdapter();
-    
-    // init
-    await init(adapter);
-    
-    // isRecognized
-    authToken = await isRecognized(adapter);
-
-    // identity flow
-    if (!authToken) {
-      consumerPresent = await authFlow(adapter);
-    }
-
-    if (consumerPresent && consumerPresent.idToken) {
-      // getSrcProfile
-      const srcProfiles = await getSrcProfile(adapter, consumerPresent.idToken);
-
-      // checkout
-      if (srcProfiles) {
-        const checkoutSuccess = await checkout(adapter, srcProfiles);
-
-        if (checkoutSuccess && checkoutSuccess.unbindAppInstance) {
-          await unbind(adapter);
-
-          gel('critical_apis').innerHTML = `Critical API timings: ${(benchmark.init + benchmark.isRecognized + benchmark.getSrcProfile) / 1000}s`;
-          gel('checkout_apis').innerHTML = `Checkout API timings: ${(benchmark.checkout + benchmark.unbind) / 1000}s`;
+  if (val) {
+    benchmarkState.sdkUrl = val;
+  
+    run(val, async () => {
+      let authToken;
+      let consumerPresent;
+  
+      autoFillUUID(key);
+  
+      // Default selection: Visa is the SRC-i
+      const vcoAdapter = window.vAdapters.VisaSRCI;
+      const adapter = new vcoAdapter();
+      
+      // init
+      await init(adapter);
+      
+      // isRecognized
+      authToken = await isRecognized(adapter);
+  
+      // identity flow
+      if (!authToken) {
+        consumerPresent = await authFlow(adapter);
+      }
+  
+      if (consumerPresent && consumerPresent.idToken) {
+        // getSrcProfile
+        const srcProfiles = await getSrcProfile(adapter, consumerPresent.idToken);
+  
+        // checkout
+        if (srcProfiles) {
+          const checkoutSuccess = await checkout(adapter, srcProfiles);
+  
+          if (checkoutSuccess && checkoutSuccess.unbindAppInstance) {
+            await unbind(adapter);
+  
+            gel('critical_apis').innerHTML = `Critical API timings: ${(benchmark.init + benchmark.isRecognized + benchmark.getSrcProfile) / 1000}s`;
+            gel('checkout_apis').innerHTML = `Checkout API timings: ${(benchmark.checkout + benchmark.unbind) / 1000}s`;
+          }
+        } else {
+          console.warn(`intentPayload not correct`);
         }
       } else {
-        console.warn(`intentPayload not correct`);
+        alert('email ID invalid for environment');
       }
-    } else {
-      alert('email ID invalid for environment');
-    }
-  });
+    });
+  }
 };
 
 gel('sdk_picker_v1').onchange = loadSdk;
 gel('sdk_picker_v2').onchange = loadSdk;
+
+gel('go_v1').onclick = () => {
+  loadSdk.call(gel('sdk_picker_v1'));
+};
+gel('go_v2').onclick = () => {
+  loadSdk.call(gel('sdk_picker_v2'));
+};

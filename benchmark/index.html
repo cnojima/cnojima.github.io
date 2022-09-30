@@ -25,26 +25,24 @@
 <body>
   <h1>Required</h1>
   <div class="required" id="pregen"></div>
+
   <div class="required">
     <label for="#emailInput">
       Email: <input id="emailInput" placeholder="Enter email address" value="mnojima@visa.com" />
     </label>
 
-    <!-- <label class="required">
-      <select multiple>
-        <option>Divya.vbox444@mailinator.com</option>
-        <option>mnojima+adyen01@visa.com</option>
-      </select>
-    </label> -->
-
     <label for="#sdk_picker_v1">
       Visa SDK V1:
-      <select id="sdk_picker_v1"></select>
+      <select id="sdk_picker_v1"></select> <button id="go_v1">Go</button>
     </label>
 
     <label for="#sdk_picker_v1">
       Visa SDK V2:
-      <select id="sdk_picker_v2"></select>
+      <select id="sdk_picker_v2"></select>  <button id="go_v2">Go</button>
+    </label>
+
+    <label>
+      <input type="checkbox" id="compliance_toggle" /> Append Compliance Settings
     </label>
   </div>
 
