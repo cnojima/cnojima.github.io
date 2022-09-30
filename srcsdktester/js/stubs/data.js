@@ -3,7 +3,7 @@ export const initData = {
   "srciDpaId": "DPAID",
   "srcInitiatorId": "[A-Fa-f0-9|A-Fa-f0-9]{8}\\-([A-Fa-f0-9|A-Fa-f0-9]{4}\\-){3}[A-Fa-f0-9|A-Fa-f0-9]{12}",
   "dpaData": {
-      "srcDpaId" : "",
+      // "srcDpaId" : "",
       "dpaPresentationName": "Disney Online",
       "dpaUri" : "http://www.disneyonline.com"
   },
@@ -51,79 +51,80 @@ export const userInfo = {
 };
 
 export const intentPayload = {
-"srcCorrelationId": "",
-"srciTransactionId": "",
-"srcDigitalCardId": "",
-"encryptedCard": "",
-"idToken": "",
-"windowRef": "",
-"consumer":{
-    "emailAddress": "ashok.vbox28@mailinator.com",
-        "consumerIdentity":{
-        "identityProvider":"SRC", 
-        "identityType":"EMAIL_ADDRESS",
-        "identityValue":"ashok.vbox28@mailinator.com"
-        },
-        "mobileNumber":{
-        "phoneNumber":"",
-        "countryCode":"1"
-    },
-    "nationalIdentifier": "USA",
-    "countryCode": "US",
-    "languageCode": "EN",
-    "firstName": "PSP",
-    "lastName": "Tester",
-    "fullName": "Psp Tester"
-},
-"dpaTransactionOptions" : {
-    "dpaLocale" : "US",
-    "dpaAcceptedBillingCountries" : ["US","CA"],
-    "dpaAcceptedShippingCountries" : ["US","CA"],
-    "dpaBillingPreference" : "ALL",
-    "dpaShippingPreference" : "ALL",
-    "consumerNameRequested" : true,
-    "consumerEmailAddressRequested" : true,
-    "consumerPhoneNumberRequested" : true,
-    "paymentOptions" : {
-        "dpaDynamicDataTtlMinutes" : 2,
-        "dynamicDataType" : "TAVV",
-        "dpaPanRequested" : false
-    },
-    "reviewAction" : "continue",
-    "checkoutDescription" : "Sample checkout",
-    "transactionType" : "PURCHASE",
-    "orderType" : "REAUTHORIZATION",
-    "payloadTypeIndicator" : "SUMMARY",
-    "transactionAmount" : {
-        "transactionAmount" : "99.95",
-        "transactionCurrencyCode" : "USD"
-    },
-    "merchantOrderId" : "ABC12345",
-    "merchantCategoryCode" : "merchantCategoryCode",
-    "merchantCountryCode" : "US",
-    "threeDsInputData" : {
-        "requestorId" : "requestorId",
-        "acquirerId" : "acquirerId",
-        "acquirerMid" : "acquirerMid"
-    },
-    "customInputData":{
-        "dpaIntegrationType":"PSP"
-    }
-},
-"payloadTypeIndicatorCheckout": "SUMMARY",
-"recipientIdCheckout": "",
-"payloadTypeIndicatorPayload": "SUMMARY",
-"recipientIdPayload": "",
-"assuranceData": {
+  "srcCorrelationId": "",
+  "srciTransactionId": "",
+  "srcDigitalCardId": "",
+  "encryptedCard": "",
+  "idToken": "",
+  "windowRef": "",
+  "consumer":{
+      "emailAddress": "ashok.vbox28@mailinator.com",
+          "consumerIdentity":{
+          "identityProvider":"SRC", 
+          "identityType":"EMAIL_ADDRESS",
+          "identityValue":"ashok.vbox28@mailinator.com"
+          },
+          "mobileNumber":{
+          "phoneNumber":"",
+          "countryCode":"1"
+      },
+      "nationalIdentifier": "USA",
+      "countryCode": "US",
+      "languageCode": "EN",
+      "firstName": "PSP",
+      "lastName": "Tester",
+      "fullName": "Psp Tester"
+  },
+  "dpaTransactionOptions" : {
+      "dpaLocale" : "US",
+      "dpaAcceptedBillingCountries" : ["US","CA"],
+      "dpaAcceptedShippingCountries" : ["US","CA"],
+      "dpaBillingPreference" : "ALL",
+      "dpaShippingPreference" : "ALL",
+      "consumerNameRequested" : true,
+      "consumerEmailAddressRequested" : true,
+      "consumerPhoneNumberRequested" : true,
+      "paymentOptions" : {
+          "dpaDynamicDataTtlMinutes" : 2,
+          "dynamicDataType" : "TAVV",
+          "dpaPanRequested" : false
+      },
+      "reviewAction" : "continue",
+      "checkoutDescription" : "Sample checkout",
+      "transactionType" : "PURCHASE",
+      "orderType" : "REAUTHORIZATION",
+      "payloadTypeIndicator" : "SUMMARY",
+      "transactionAmount" : {
+          "transactionAmount" : "99.95",
+          "transactionCurrencyCode" : "USD"
+      },
+      "merchantOrderId" : "ABC12345",
+      "merchantCategoryCode" : "merchantCategoryCode",
+      "merchantCountryCode" : "US",
+      "threeDsInputData" : {
+          "requestorId" : "requestorId",
+          "acquirerId" : "acquirerId",
+          "acquirerMid" : "acquirerMid"
+      },
+      "customInputData":{
+          "dpaIntegrationType":"PSP"
+      }
+  },
+  "payloadTypeIndicatorCheckout": "SUMMARY",
+  "recipientIdCheckout": "",
+  "payloadTypeIndicatorPayload": "SUMMARY",
+  "recipientIdPayload": "",
+  "assuranceData": {
     "verificationData":[{
-    "verificationType": "CARDHOLDER",
-    "verificationEntity": "01",
-    "verificationMethod": "01",
-    "verificationresponses": "01",
-    "verificationTimestamp": "1646416550"
+      "verificationType": "CARDHOLDER",
+      "verificationEntity": "01",
+      "verificationMethod": "01",
+      "verificationresponses": "01",
+      verificationResults: "01",
+      "verificationTimestamp": "1646416550"
     }]
-},
-"srciActionCode": "NEW_USER" 
+  },
+  "srciActionCode": "NEW_USER" 
 };
 
 export const environmentKeys = {
@@ -235,4 +236,14 @@ export const environmentKeys = {
       srciDpaId: 'DPAID',
       srcDpaId: ''
     }
-  };
+};
+
+export const srcProfiles = [];
+
+export const benchmark = {
+  init: 0,
+  isRecognized: 0,
+  getSrcProfile: 0,
+  checkout: 0,
+  unbind: 0,
+};

@@ -19,11 +19,12 @@ export function autoFillUUID(key) {
   initData.srciTransactionId = srciTransactionId;
   intentPayload.srciTransactionId = srciTransactionId;
 
+  const bad = ['srcDpaId', 'panEncryptionId'];
+
   for (let k in env) {
-    initData[k] = env[k];
+    if (bad.indexOf(k) === -1)
+      initData[k] = env[k];
   }
 
-  console.log(genericKey, env, initData)
-
-  gel('initOutput').innerHTML = JSON.stringify(initData, undefined, 4);
+  // gel('initOutput').innerHTML = JSON.stringify(initData, undefined, 4);
 }

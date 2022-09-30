@@ -1,10 +1,12 @@
 import { gel } from '../helpers/utils.js';
 import { autoFillUUID } from '../helpers/uuid.js';
+import { benchmark } from '../stubs/data.js';
 import { authFlow } from './auth-flow.js';
 import { checkout } from './checkout.js';
 import { getSrcProfile } from './get-src-profile.js';
 import { init } from './init.js';
 import { isRecognized } from './is-recognized.js';
+import { unbind } from './unbind.js';
 
 const run = (val, handler) => {
   let tag = gel('sdk_script');
@@ -29,20 +31,46 @@ export const loadSdk = function() {
   const key = this.options[this.selectedIndex].innerHTML.trim();
 
   run(val, async () => {
+    let authToken;
+    let consumerPresent;
+
     autoFillUUID(key);
 
     // Default selection: Visa is the SRC-i
     const vcoAdapter = window.vAdapters.VisaSRCI;
     const adapter = new vcoAdapter();
     
+    // init
     await init(adapter);
-    let authToken = await isRecognized(adapter);
+    
+    // isRecognized
+    authToken = await isRecognized(adapter);
 
+    // identity flow
     if (!authToken) {
-      await authFlow(adapter);
+      consumerPresent = await authFlow(adapter);
     }
-    await getSrcProfile(adapter);
-    await checkout(adapter);
+
+    if (consumerPresent && consumerPresent.idToken) {
+      // getSrcProfile
+      const srcProfiles = await getSrcProfile(adapter, consumerPresent.idToken);
+
+      // checkout
+      if (srcProfiles) {
+        const checkoutSuccess = await checkout(adapter, srcProfiles);
+
+        if (checkoutSuccess && checkoutSuccess.unbindAppInstance) {
+          await unbind(adapter);
+
+          gel('critical_apis').innerHTML = `Critical API timings: ${(benchmark.init + benchmark.isRecognized + benchmark.getSrcProfile) / 1000}s`;
+          gel('checkout_apis').innerHTML = `Checkout API timings: ${(benchmark.checkout + benchmark.unbind) / 1000}s`;
+        }
+      } else {
+        console.warn(`intentPayload not correct`);
+      }
+    } else {
+      alert('email ID invalid for environment');
+    }
   });
 };
 

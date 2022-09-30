@@ -1,26 +1,26 @@
-import { catchErr } from "../helpers/utils.js";
-import { initData } from "../stubs/data.js";
+import { catchErr, gel } from "../helpers/utils.js";
+import { benchmark, initData } from "../stubs/data.js";
 
 export async function init(adapter) {
   console.log('[init] start');
-  // init
-  let outputText = document.getElementById('initOutput');
-  outputText.innerHTML = "";
 
   const startTime = Date.now();
-  console.log("initData=> ", initData);
 
   await adapter.init(initData).then((response) => {
+    const endTime = Date.now();
+    benchmark.init = endTime - startTime;
+    console.log(`[init] ttaken: ${(benchmark.init)}ms`);
+
     if (!Object.keys(response).length) {
-      outputText.innerHTML += "init() Success!!!!\n";
+      gel('init_complete').checked = true;
+      gel('init_complete_timing').innerHTML = `${(benchmark.init)}ms`;
     } else {
-      outputText.innerHTML += JSON.stringify(result, undefined, 4);
+      alert('init failed, check console');
     }
 
-    console.log('Init Response Data', JSON.stringify(response));
+    // console.log('Init Response Data', JSON.stringify(response));
     return response;
   }).catch(catchErr);
 
-  const endTime = Date.now();
-  console.log(`[init] ttaken: ${(endTime - startTime)}ms`);
+  
 }

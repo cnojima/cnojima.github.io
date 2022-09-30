@@ -1,20 +1,22 @@
+import { gel } from "../helpers/utils.js";
+import { benchmark, intentPayload } from "../stubs/data.js";
+
 export async function checkout(adapter) {
   console.log('[checkout] start');
   const startTime = Date.now();
+  const response = await adapter.checkout(intentPayload);
+  const endTime = Date.now();
 
-  var inputText = JSON.parse(document.getElementById('selectCardInput').value.trim());
+  benchmark.checkout = endTime - startTime;
 
-  await adapter.checkout(inputText).then((response, error) => {
-    console.log('Response from selectCard: %o', response);
-
-    if (response['reason']) {
-      console.log('Unable to launch DCF: %o', error);
-    } else {
-      console.log('%o', response);
-    }
-
-    const endTime = Date.now();
-    console.log(`[checkout] ttaken: ${(endTime - startTime)}ms`);
-    return response;
-  });
+  console.log(`[checkout] ttaken: ${(benchmark.checkout)}ms`);
+  
+  if (response['reason']) {
+    console.log('Checkout error:', error);
+  } else {
+    gel('checkout_complete').checked = true;
+    gel('checkout_complete_timing').innerHTML = `${(benchmark.checkout)}ms`;
+  }
+  
+  return response;
 }

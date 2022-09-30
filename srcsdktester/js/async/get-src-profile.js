@@ -1,32 +1,34 @@
-export async function getSrcProfile(adapter) {
+
+import { gel } from "../helpers/utils.js";
+import { benchmark, intentPayload, srcProfiles } from "../stubs/data.js";
+
+export async function getSrcProfile(adapter, authToken) {
   console.log('[getSrcProfile] start');
+
   const startTime = Date.now();
+  const response = await adapter.getSrcProfile(authToken);
+  const endTime = Date.now();
 
-  await adapter.getSrcProfile(authToken).then((response) => {
-    console.log('Response from getSrcProfile call: %o', response);
+  benchmark.getSrcProfile = endTime - startTime;
+  console.log(`[getSrcProfile] ttaken: ${(benchmark.getSrcProfile)}ms`);
+
+  // console.log('Response from getSrcProfile call: %o', response);
     
-    if (response['reason']) {
-      console.warn('Unable to get card list: %o', response);
-    } else {
-      console.log('%o', response);
-    }
-    srcCorrelationId = response.srcCorrelationId;
-    srcProfiles = response.profiles;
+  if (response['reason']) {
+    console.warn('Unable to get card list: %o', response);
+    return null;
+  } else {
+    gel('get_src_profile_complete').checked = true;
+    gel('get_src_profile_complete_timing').innerHTML = `${(benchmark.getSrcProfile)}ms`;
+  }
+  
+  response.profiles.forEach(profile => srcProfiles.push(profile));
 
-    const endTime = Date.now();
-    console.log(`[getSrcProfile] ttaken: ${(endTime - startTime)}ms`);
+  // set first card
+  intentPayload.srcDigitalCardId = srcProfiles[0].maskedCards[0].srcDigitalCardId;
+  intentPayload.idToken = srcProfiles[0].idToken;
+  intentPayload.srcCorrelationId = response.srcCorrelationId;
+  intentPayload.srcDigitalCardId = srcProfiles[0].maskedCards[0].srcDigitalCardId;
 
-    // set first card
-    intentPayload.srcDigitalCardId = srcProfiles[0].maskedCards[0].srcDigitalCardId;
-
-    populateDataInCardList(response);
-    
-    //The below code will move id token to checkout API
-    let selectCardInput = JSON.parse(document.getElementById('selectCardInput').value.trim());
-    selectCardInput.idToken = srcProfiles[0].idToken;
-    selectCardInput.srciTransactionId = srciTransactionId;
-    selectCardInput.srcCorrelationId = srcCorrelationId;
-    selectCardInput.srcDigitalCardId = srcProfiles[0].maskedCards[0].srcDigitalCardId;
-    document.getElementById('selectCardInput').value = JSON.stringify(selectCardInput, undefined, 4);
-  });
+  return intentPayload;
 }
