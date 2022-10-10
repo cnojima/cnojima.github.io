@@ -3,7 +3,7 @@ export const initData = {
   "srciDpaId": "DPAID",
   "srcInitiatorId": "[A-Fa-f0-9|A-Fa-f0-9]{8}\\-([A-Fa-f0-9|A-Fa-f0-9]{4}\\-){3}[A-Fa-f0-9|A-Fa-f0-9]{12}",
   "dpaData": {
-      // "srcDpaId" : "",
+      "srcDpaId" : "SRCDPAID",
       "dpaPresentationName": "Disney Online",
       "dpaUri" : "http://www.disneyonline.com"
   },

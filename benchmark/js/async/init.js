@@ -9,13 +9,13 @@ export async function init(adapter) {
   await adapter.init(initData).then((response) => {
     const endTime = Date.now();
     benchmark.init = endTime - startTime;
-    console.log(`[init] ttaken: ${(benchmark.init)}ms`);
-
+    console.log(`[init] ttaken: ${(benchmark.init)}ms`, response, initData);
+    
     if (!Object.keys(response).length) {
       gel('init_complete').checked = true;
       gel('init_complete_timing').innerHTML = `${(benchmark.init)}ms`;
     } else {
-      alert('init failed, check console');
+      console.error('init failed, check console');
     }
 
     // console.log('Init Response Data', JSON.stringify(response));
