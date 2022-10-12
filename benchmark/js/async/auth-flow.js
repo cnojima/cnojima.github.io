@@ -14,12 +14,16 @@ export async function authFlow(adapter) {
   });
   benchmark.identityLookup = Date.now() - identityLookupStart;
   
-  if (res.consumerPresent) {
+  if (res.error) {
+    throw new Error(JSON.stringify(res, null, 2));
+  } else if (res.consumerPresent) {
     const initiateIdentityValidationStart = Date.now();
     const res = await initiateIdentityValidation(adapter);
     benchmark.initiateIdentityValidation = Date.now() - initiateIdentityValidationStart;
     
-    if (res !== false) {
+    if (res.error) {
+      throw new Error(JSON.stringify(res, null, 2));
+    } else if (res !== false) {
       if (canGetOtp(benchmarkState.sdkUrl)) {
         otpCode = await getOTP();
       }
@@ -35,10 +39,14 @@ export async function authFlow(adapter) {
       });
       benchmark.completeIdentityValidation = Date.now() - completeIdentityValidationStart;
 
-      gel('auth_complete').checked = true;
-      gel('auth_complete_timing').innerHTML = `${(benchmark.identityLookup + benchmark.initiateIdentityValidation + benchmark.completeIdentityValidation) / 1000}s`;
-      gel('auth_breakdown').innerHTML = `[identityLookup: ${benchmark.identityLookup}ms]<br/>[initiateIdentityValidation: ${benchmark.initiateIdentityValidation}ms]<br/>[completeIdentityValidation: ${benchmark.completeIdentityValidation}ms]`;
-      return res;
+      if (res.error) {
+        throw new Error(JSON.stringify(res, null, 2));
+      } else {
+        gel('auth_complete').checked = true;
+        gel('auth_complete_timing').innerHTML = `${(benchmark.identityLookup + benchmark.initiateIdentityValidation + benchmark.completeIdentityValidation) / 1000}s`;
+        gel('auth_breakdown').innerHTML = `[identityLookup: ${benchmark.identityLookup}ms]<br/>[initiateIdentityValidation: ${benchmark.initiateIdentityValidation}ms]<br/>[completeIdentityValidation: ${benchmark.completeIdentityValidation}ms]`;
+        return res;
+      }
     }
   } else {
     console.warn(`${email} not present`);
@@ -52,7 +60,9 @@ async function completeIdentityValidation(adapter, code) {
 
   const response = await adapter.completeIdentityValidation(code);
 
-  if (response['reason']) {
+  if (response.error) {
+    throw new Error(JSON.stringify(response, null, 2));
+  } else if (response['reason']) {
     console.log('Unable to verify OTP: %o', response);
   } else {
     console.log('Response from Verify OTP: %o', response);

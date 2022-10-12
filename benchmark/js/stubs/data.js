@@ -12,7 +12,7 @@ export const initData = {
       "dpaAcceptedBillingCountries" : ["US","CA"],
       "dpaAcceptedShippingCountries" : ["US","CA"],
       "dpaBillingPreference" : "FULL",
-      "dpaShippingPreference" : "FULL",
+      "dpaShippingPreference" : "NONE",
       "consumerNameRequested" : true,
       "consumerEmailAddressRequested" : true,
       "consumerPhoneNumberRequested" : true,
@@ -39,7 +39,8 @@ export const initData = {
           "acquirerMid" : "acquirerMid"
       },
       "customInputData":{
-          "dpaIntegrationType":"PSP"
+        "checkoutOrchestrator": "merchant",
+        "dpaIntegrationType":"PSP"
        }
   }
 };
@@ -63,10 +64,10 @@ export const intentPayload = {
           "identityProvider":"SRC", 
           "identityType":"EMAIL_ADDRESS",
           "identityValue":"ashok.vbox28@mailinator.com"
-          },
-          "mobileNumber":{
-          "phoneNumber":"",
-          "countryCode":"1"
+        },
+        "mobileNumber":{
+        "phoneNumber":"4153434334",
+        "countryCode":"1"
       },
       "nationalIdentifier": "USA",
       "countryCode": "US",

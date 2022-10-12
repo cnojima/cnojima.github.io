@@ -14,9 +14,11 @@ export async function getSrcProfile(adapter, authToken) {
 
   // console.log('Response from getSrcProfile call: %o', response);
     
-  if (response['reason']) {
+  if (response.error) {
+    throw new Error(JSON.stringify(response, null, 2));
+  } else if (response['reason']) {
     console.warn('Unable to get card list: %o', response);
-    return null;
+    throw new Error(JSON.stringify(response, null, 2));
   } else {
     gel('get_src_profile_complete').checked = true;
     gel('get_src_profile_complete_timing').innerHTML = `${(benchmark.getSrcProfile)}ms`;

@@ -34,7 +34,7 @@ export const buildSdkPicker = () => {
     option.innerHTML = `${k} SDKv1`;
   
     const option_v2 = cel('option');
-    option_v2.setAttribute('value', `${envs[k]}/checkout-widget/resources/js/visa-sdk.js`)
+    option_v2.setAttribute('value', `${envs[k]}/checkout-widget/resources/js/visa-sdk.js?integrated`)
     option_v2.innerHTML = `${k} SDKv2`;
   
     sdkSelector.appendChild(option);
