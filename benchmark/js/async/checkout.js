@@ -11,12 +11,11 @@ export async function checkout(adapter) {
 
   console.log(`[checkout] ttaken: ${(benchmark.checkout)}ms`);
   
-  if (response['reason']) {
-    console.log('Checkout error:', error);
+  if (response.error || response['reason']) {
+    throw new Error(JSON.stringify(response, null, 2));
   } else {
     gel('checkout_complete').checked = true;
     gel('checkout_complete_timing').innerHTML = `${(benchmark.checkout)}ms`;
   }
-  
   return response;
 }

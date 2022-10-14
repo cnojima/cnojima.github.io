@@ -7,7 +7,7 @@ export async function isRecognized(adapter) {
   const startTime = Date.now();
   
   let token;
-  const ret = await adapter.isRecognized().catch(catchErr);
+  const response = await adapter.isRecognized().catch(catchErr);
   const endTime = Date.now();
 
   benchmark.isRecognized = endTime - startTime;
@@ -15,10 +15,12 @@ export async function isRecognized(adapter) {
   gel('is_recognized_complete').checked = true;
   gel('is_recognized_complete_timing').innerHTML = `${benchmark.isRecognized}ms`;
 
-  if (ret.idTokens) {
-    token = ret.idTokens[0];
-  } else if(ret.recognized === false) {
+  if (response.idTokens) {
+    token = response.idTokens[0];
+  } else if (response.recognized === false) {
     gel('is_recognized_complete_timing').innerHTML = `${benchmark.isRecognized}ms (unrecognized)`;
+  } else if (response.error) {
+    throw new Error(JSON.stringify(response, null, 2));
   }
 
   console.log(`[recognized] ttaken: ${(benchmark.isRecognized)}ms`);

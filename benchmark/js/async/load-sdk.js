@@ -11,6 +11,7 @@ import { isRecognized } from './is-recognized.js';
 import { unbind } from './unbind.js';
 
 const run = (val, handler) => {
+  const loadStart = Date.now();
   let tag = gel('sdk_script');
 
   if (!tag) {
@@ -18,7 +19,9 @@ const run = (val, handler) => {
     tag.type = 'text/javascript';
     tag.async = false;
     tag.onload = () => {
-      handler();
+      handler(loadStart).catch(err => {
+        gel('error_log').innerHTML = err;
+      });
     }
   }
 
@@ -40,8 +43,9 @@ export const loadSdk = function() {
   if (val) {
     benchmarkState.sdkUrl = val;
   
-    run(val, async () => {
-      let authToken;
+    run(val, async (loadStart) => {
+      let accessToken;
+      let token;
       let consumerPresent;
   
       autoFillUUID(key);
@@ -51,52 +55,63 @@ export const loadSdk = function() {
       const adapter = new vcoAdapter();
       
       // init
-      await init(adapter).catch(catchErr);
+      await init(adapter, loadStart).catch(catchErr);
       updateBenchmarks();
       
       // isRecognized
-      authToken = await isRecognized(adapter).catch(catchErr);;
+      accessToken = await isRecognized(adapter).catch(catchErr);;
       updateBenchmarks();
   
       // identity flow
-      if (!authToken) {
+      if (!accessToken) {
         consumerPresent = await authFlow(adapter).catch(catchErr);;
         updateBenchmarks();
       }
-  
-      if (consumerPresent && consumerPresent.idToken) {
+      
+      if (accessToken ||
+        (consumerPresent && consumerPresent.idToken)
+      ) {
+        token = accessToken || consumerPresent?.idToken
         // getSrcProfile
-        const srcProfiles = await getSrcProfile(adapter, consumerPresent.idToken).catch(catchErr);;
+        const srcProfiles = await getSrcProfile(adapter, token).catch(catchErr);;
         updateBenchmarks();
   
         // checkout
         if (srcProfiles) {
           const checkoutSuccess = await checkout(adapter, srcProfiles).catch(catchErr);;
-          updateBenchmarks();
+
+          if (!checkoutSuccess || checkoutSuccess.error) {
+            console.error(`checkout error detected: `, checkoutSuccess);
+            throw new Error(JSON.stringify(checkoutSuccess));
+          } else {
+            updateBenchmarks();
+          }
   
           if (checkoutSuccess && checkoutSuccess.unbindAppInstance) {
-            await unbind(adapter).catch(catchErr);;
-  
-            gel('critical_apis').innerHTML = `Critical API timings: ${(benchmark.init + benchmark.isRecognized + benchmark.getSrcProfile) / 1000}s`;
-            gel('checkout_apis').innerHTML = `Checkout API timings: ${(benchmark.checkout + benchmark.unbind) / 1000}s`;
-            updateBenchmarks();
+            await unbind(adapter, checkoutSuccess).catch(catchErr);;
           }
         } else {
           console.warn(`intentPayload not correct`);
         }
       } else {
-        setEmailErrorMessage('Email was not found on this instance.  Check value.');
+        catchErr('Email was not found on this instance.  Check value.');
       }
+      
+      gel('critical_apis').innerHTML = `Critical API timings: ${(benchmark.init + benchmark.isRecognized + benchmark.getSrcProfile) / 1000}s`;
+      gel('checkout_apis').innerHTML = `Checkout API timings: ${(benchmark.checkout + benchmark.unbind) / 1000}s`;
+      updateBenchmarks();
+
+      gel('done').innerHTML = 'done';
     })
   }
 };
-
-// gel('sdk_picker_v1').onchange = loadSdk;
-// gel('sdk_picker_v2').onchange = loadSdk;
 
 gel('go_v1').onclick = () => {
   loadSdk.call(gel('sdk_picker_v1'));
 };
 gel('go_v2').onclick = () => {
   loadSdk.call(gel('sdk_picker_v2'));
+};
+gel('go_v3').onclick = () => {
+  loadSdk.call(gel('sdk_picker_v3'));
 };

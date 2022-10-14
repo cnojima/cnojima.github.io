@@ -1,4 +1,5 @@
 import { qsa, gel } from "../helpers/utils.js"
+import { benchmark } from '../stubs/data.js';
 
 
 const targets = [
@@ -18,4 +19,8 @@ export const resetUi = () => {
   gel('auth_breakdown').innerHTML = '';
   gel('error_log').innerHTML = '';
   gel('benchmark_data').value = '';
+
+  for (let k in benchmark) {
+    benchmark[k] = 0;
+  }
 }

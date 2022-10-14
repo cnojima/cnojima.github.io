@@ -23,12 +23,11 @@ export const catchErr = err => {
   const h1 = cel('h1');
   h1.innerHTML = "Error Caught:"
   const pre = cel('pre');
-  pre.innerHTML = JSON.stringify(err, null, 2);
+  pre.innerHTML = err;
   
   gel('error_log').appendChild(h1);
   gel('error_log').appendChild(pre);
 
-  console.trace(err);
   return err;
 }
 
