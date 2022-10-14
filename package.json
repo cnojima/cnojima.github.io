@@ -4,8 +4,10 @@
   "description": "SRC/Click-2-Pay Client Performance Benchmarking Toolchain",
   "main": "index.js",
   "scripts": {
-    "benchmark": "xk6-browser run --out json=metrics.json scripts/sbx.js",
+    "benchmark-old": "xk6-browser run --out json=metrics.json xk6-scripts/sbx.js",
+    "benchmark": "xk6-browser run --out json=metrics.json xk6-scripts/vbox444.js",
     "codegen": "npx playwright codegen ",
+    "generate-data-444": "node playwright/vbox444.js",
     "sanity": "xk6-browser run --out json=metrics.json sanity.js"
   },
   "keywords": [

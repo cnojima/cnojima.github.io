@@ -17,6 +17,5 @@ export async function checkout(adapter) {
     gel('checkout_complete').checked = true;
     gel('checkout_complete_timing').innerHTML = `${(benchmark.checkout)}ms`;
   }
-  
   return response;
 }

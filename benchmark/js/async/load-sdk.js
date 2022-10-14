@@ -94,22 +94,24 @@ export const loadSdk = function() {
           console.warn(`intentPayload not correct`);
         }
       } else {
-        setEmailErrorMessage('Email was not found on this instance.  Check value.');
+        catchErr('Email was not found on this instance.  Check value.');
       }
       
       gel('critical_apis').innerHTML = `Critical API timings: ${(benchmark.init + benchmark.isRecognized + benchmark.getSrcProfile) / 1000}s`;
       gel('checkout_apis').innerHTML = `Checkout API timings: ${(benchmark.checkout + benchmark.unbind) / 1000}s`;
       updateBenchmarks();
+
+      gel('done').innerHTML = 'done';
     })
   }
 };
-
-// gel('sdk_picker_v1').onchange = loadSdk;
-// gel('sdk_picker_v2').onchange = loadSdk;
 
 gel('go_v1').onclick = () => {
   loadSdk.call(gel('sdk_picker_v1'));
 };
 gel('go_v2').onclick = () => {
   loadSdk.call(gel('sdk_picker_v2'));
+};
+gel('go_v3').onclick = () => {
+  loadSdk.call(gel('sdk_picker_v3'));
 };

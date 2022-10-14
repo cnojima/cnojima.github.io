@@ -23,6 +23,7 @@
     }
     
     div.required label,
+    /* div.required label :first-child, */
     div.progress label {
       display: block;
       margin: 10px 0;
@@ -41,13 +42,18 @@
     </label>
 
     <label for="#sdk_picker_v1">
-      Visa SDK V1:
+      visaSdk.js:
       <select id="sdk_picker_v1"></select> <button id="go_v1">Go</button>
     </label>
 
-    <label for="#sdk_picker_v1">
-      Visa SDK V2:
+    <label for="#sdk_picker_v2">
+      visa-sdk.js:
       <select id="sdk_picker_v2"></select>  <button id="go_v2">Go</button>
+    </label>
+
+    <label for="#sdk_picker_v3">
+      visa-sdk.js?integrated:
+      <select id="sdk_picker_v3"></select>  <button id="go_v3">Go</button>
     </label>
 
     <label>
@@ -90,6 +96,8 @@
   <div class="messaging error" id="error_log"></div>
 
   <textarea class="benchmark_data" id="benchmark_data"></textarea>
+
+  <div id="done"></div>
 
   <script async src="js/driver-perf.js" type="module"></script>
   </body>
