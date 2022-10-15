@@ -39,7 +39,7 @@ export const initData = {
       acquirerMid: "acquirerMid"
     },
     customInputData:{
-      checkoutOrchestrator: "TESTING", // 'merchant' is integrated exp
+      checkoutOrchestrator: "merchant",//"TESTING", // 'merchant' is integrated exp
       // checkoutOrchestrator: "merchant", // 'merchant' is integrated exp
       dpaIntegrationType: "PSP"
     }
