@@ -19,10 +19,10 @@ const { chromium } = require('playwright');
     await page.locator('[placeholder="Enter email address"]').fill('divya.vbox444@mailinator.com');
   
     // Select https://vbox444.secure.checkout.visa.com/checkout-widget/resources/js/visa-sdk.js?integrated
-    await page.locator('#sdk_picker_v2').selectOption('https://vbox444.secure.checkout.visa.com/checkout-widget/resources/js/visa-sdk.js?integrated');
+    await page.locator('#sdk_picker_v3').selectOption({ index: 0 });
   
     // Click #go_v2
-    await page.locator('#go_v2').click();
+    await page.locator('#go_v3').click();
   
     await setTimeout(async () => {
       // ---------------------

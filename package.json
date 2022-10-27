@@ -6,6 +6,7 @@
   "scripts": {
     "benchmark-old": "xk6-browser run --out json=metrics.json xk6-scripts/sbx.js",
     "benchmark": "xk6-browser run --out json=metrics.json xk6-scripts/vbox444.js",
+    "benchmark2": "xk6-browser run --out json=metrics.json xk6-scripts/vbox444-srcsdktester.js",
     "codegen": "npx playwright codegen ",
     "generate-data-444": "node playwright/vbox444.js",
     "sanity": "xk6-browser run --out json=metrics.json sanity.js"

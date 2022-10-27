@@ -20,12 +20,9 @@ export default function () {
     // Fill [placeholder="Enter email address"]
     page.locator('[placeholder="Enter email address"]').fill('divya.vbox444@mailinator.com');
   
-    // Select https://vbox444.secure.checkout.visa.com/checkout-widget/resources/js/visa-sdk.js?integrated
-    page.locator('#sdk_picker_v2').selectOption('https://vbox444.secure.checkout.visa.com/checkout-widget/resources/js/visa-sdk.js?integrated');
+    page.locator('#sdk_picker_v3').selectOption('https://vbox444.secure.checkout.visa.com/checkout-widget/resources/js/src-i-adapter/visa-sdk.js?v2');
+    page.locator('#go_v3').click();
   
-    // Click #go_v2
-    page.locator('#go_v2').click();
-
     const text = page.locator('#done');
     text.waitFor({
         state: 'visible',
