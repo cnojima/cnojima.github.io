@@ -39,7 +39,7 @@ export const initData = {
       acquirerMid: "acquirerMid"
     },
     customInputData:{
-      checkoutOrchestrator: "TESTING", // 'merchant' is integrated exp
+      checkoutOrchestrator: "merchant",//"TESTING", // 'merchant' is integrated exp
       // checkoutOrchestrator: "merchant", // 'merchant' is integrated exp
       dpaIntegrationType: "PSP"
     }
@@ -235,6 +235,12 @@ export const environmentKeys = {
   'Vbox444_Container_DockerEE': {
     srcInitiatorId: '3EY722QTUPZCY5X5A3IY21OLy4te0ZTO9KB3PJMW9ugdQ3ZAQ',
     panEncryptionId: 'J5C09XBZA6G891K4FGG611NiZViO3l905GPqA088DCEBKklZk',
+    srciDpaId: 'DPAID',
+    srcDpaId: ''
+  },
+  'QaPerf': {
+    srcInitiatorId: 'XV91JGXVDOQ0ZUTUQR7111lGCDgvTCorKByrLBEWs7pc9qP-s',
+    panEncryptionId: 'XV91JGXVDOQ0ZUTUQR7111lGCDgvTCorKByrLBEWs7pc9qP-s',
     srciDpaId: 'DPAID',
     srcDpaId: ''
   }
