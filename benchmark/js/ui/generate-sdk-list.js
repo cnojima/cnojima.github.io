@@ -4,6 +4,7 @@ const envs = {
   // "--- Pick": "",
   Vbox444_Adyen: "https://vbox444.secure.checkout.visa.com",
   SandBox: "https://sandbox.secure.checkout.visa.com",
+  QaPerf: "https://perf.qa.secure.checkout.visa.com",
   CERT: "https://cert.secure.checkout.visa.com",
   // CERT1: "https://cert1.secure.checkout.visa.com",
   // ICL: "https://demo.icl.visa.com",

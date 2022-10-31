@@ -237,6 +237,12 @@ export const environmentKeys = {
     panEncryptionId: 'J5C09XBZA6G891K4FGG611NiZViO3l905GPqA088DCEBKklZk',
     srciDpaId: 'DPAID',
     srcDpaId: ''
+  },
+  'QaPerf': {
+    srcInitiatorId: 'XV91JGXVDOQ0ZUTUQR7111lGCDgvTCorKByrLBEWs7pc9qP-s',
+    panEncryptionId: 'XV91JGXVDOQ0ZUTUQR7111lGCDgvTCorKByrLBEWs7pc9qP-s',
+    srciDpaId: 'DPAID',
+    srcDpaId: ''
   }
 };
 
