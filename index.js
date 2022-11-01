@@ -1,9 +1,9 @@
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+// process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 // alias http://kubernetes.docker.internal:3000/
-const fs = require('fs');
+// const fs = require('fs');
 const express = require('express')
-const https = require('https')
+// const https = require('https')
 const http = require('http')
 const request = require('request')
 
