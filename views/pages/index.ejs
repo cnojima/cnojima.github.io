@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>SRC Headless Benchmark Tool</title>
+  <style>
+    .error {
+      color: #cc0000;
+    }
+    .json {
+      border: 1px solid #ff0000;
+    }
+    .textarea,
+    .jsoncontent {
+      width: 49%;
+      height: 200px;
+      border: 1px solid #ff0000;
+    }
+
+    .benchmark_data {
+      width: 400px;
+      height: 200px;
+    }
+    
+    div.required label,
+    /* div.required label :first-child, */
+    div.progress label {
+      display: block;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Required</h1>
+  <div class="required" id="pregen"></div>
+
+  <div class="required">
+    <label for="#emailInput">
+      Email: <input id="emailInput" placeholder="Enter email address" value="mnojima@visa.com" />
+      <span class="messaging error" id="email_error_message"></span>
+    </label>
+
+    <label for="#sdk_picker_v1">
+      visaSdk.js:
+      <select id="sdk_picker_v1"></select> <button id="go_v1">Go</button>
+    </label>
+
+    <label for="#sdk_picker_v2">
+      visa-sdk.js:
+      <select id="sdk_picker_v2"></select>  <button id="go_v2">Go</button>
+    </label>
+
+    <label for="#sdk_picker_v3">
+      visa-sdk.js?v2:
+      <select id="sdk_picker_v3"></select>  <button id="go_v3">Go</button>
+    </label>
+
+    <label>
+      <input type="checkbox" id="compliance_toggle" /> Append Compliance Settings
+    </label>
+  </div>
+
+  <h1>Progress & Benchmarks</h1>
+  <div class="progress">
+    <label for="#init_complete">
+      <input type="checkbox" id="init_complete" disabled /> init() <span id="init_complete_timing" class="timing"></span>
+    </label>
+
+    <label for="#is_recognized_complete">
+      <input type="checkbox" id="is_recognized_complete" disabled /> isRecognized() <span id="is_recognized_complete_timing" class="timing"></span>
+    </label>
+
+    <label for="#auth_complete">
+      <input type="checkbox" id="auth_complete" disabled /> ID Auth <span id="auth_complete_timing" class="timing"></span>
+      <div id="auth_breakdown"></div>
+    </label>
+
+    <label for="#get_src_profile_complete">
+      <input type="checkbox" id="get_src_profile_complete" disabled /> getSrcProfile() <span id="get_src_profile_complete_timing" class="timing"></span>
+    </label>
+
+    <label for="#checkout_complete">
+      <input type="checkbox" id="checkout_complete" disabled /> checkout() <span id="checkout_complete_timing" class="timing"></span>
+    </label>
+
+    <label for="#unbind_complete">
+      <input type="checkbox" id="unbind_complete" disabled /> unbind() <span id="unbind_complete_timing" class="timing"></span>
+    </label>
+
+    <label class="messaging" id="critical_apis"></label>
+    <label class="messaging" id="checkout_apis"></label>
+  </div>
+
+  <div class="messaging" id="log"></div>
+  <div class="messaging error" id="error_log"></div>
+
+  <textarea class="benchmark_data" id="benchmark_data"></textarea>
+
+  <div id="done"></div>
+
+  <script async src="js/driver-perf.js" type="module"></script>
+  </body>
+</html>
