@@ -10,7 +10,7 @@ export async function getOTP() {
   console.info('attempting to retrieve OTP code via API');
 
   let token;
-  const proxy = `${window.location.protocol}//${window.location.hostname}/proxy`;
+  const proxy = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/proxy`;
   const url = 'https://vbox671.secure.checkout.visa.com/srcsdktester/generateOtp';
 
   const environment = extractHostname(benchmarkState.sdkUrl);

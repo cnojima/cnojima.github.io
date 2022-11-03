@@ -1,3 +1,5 @@
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
+
 const express = require('express')
 const request = require('request')
 const path = require('path')
@@ -18,9 +20,15 @@ express()
       const forwardUrl = req.query["url"];
     
       // make request to IEX API and forward response
-      request(forwardUrl, {
-        headers: req.headers
-      }).pipe(res);
+      if (forwardUrl) {
+        request(forwardUrl, {
+          headers: req.headers
+        }).pipe(res);
+      } else {
+        res.statusCode = 400;
+        res.statusMessage = 'missing parameter'
+        return res;
+      }
     } catch(ex) {
       console.error(ex);
       return res;
