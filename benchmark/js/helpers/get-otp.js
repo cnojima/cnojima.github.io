@@ -5,12 +5,13 @@ import { extractHostname } from './utils.js';
 
 export const canGetOtp = sdkUrl => (sdkUrl.indexOf('vbox') > -1);
 
+const useProxy = false;
 
 export async function getOTP() {
   console.info('attempting to retrieve OTP code via API');
 
   let token;
-  const proxy = `${window.location.protocol}//${window.location.hostname}/proxy`;
+  const proxy = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/proxy`;
   const url = 'https://vbox671.secure.checkout.visa.com/srcsdktester/generateOtp';
 
   const environment = extractHostname(benchmarkState.sdkUrl);
@@ -23,7 +24,7 @@ export async function getOTP() {
   // Make indirect call to get OTP
   const options = {
     method: 'GET',
-    url: `${proxy}?url=${url}`,
+    url: useProxy ? `${proxy}?url=${url}` : url,
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json; charset=UTF-8',

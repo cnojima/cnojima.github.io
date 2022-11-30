@@ -4,6 +4,7 @@ const envs = {
   // "--- Pick": "",
   Vbox444_Adyen: "https://vbox444.secure.checkout.visa.com",
   SandBox: "https://sandbox.secure.checkout.visa.com",
+  QaPerf: "https://perf.qa.secure.checkout.visa.com",
   CERT: "https://cert.secure.checkout.visa.com",
   // CERT1: "https://cert1.secure.checkout.visa.com",
   // ICL: "https://demo.icl.visa.com",
@@ -35,11 +36,11 @@ export const buildSdkPicker = () => {
     option.innerHTML = `${k} SDKv1`;
   
     const option_v2 = cel('option');
-    option_v2.setAttribute('value', `${envs[k]}/checkout-widget/resources/js/visa-sdk.js`)
+    option_v2.setAttribute('value', `${envs[k]}/checkout-widget/resources/js/src-i-adapter/visa-sdk.js`)
     option_v2.innerHTML = `${k} SDKv2`;
 
     const option_v3 = cel('option');
-    option_v3.setAttribute('value', `${envs[k]}/checkout-widget/resources/js/visa-sdk.js?integrated`)
+    option_v3.setAttribute('value', `${envs[k]}/checkout-widget/resources/js/src-i-adapter/visa-sdk.js?v2`)
     option_v3.innerHTML = `${k} SDKv2 INTEGRATED`;
   
     sdkSelector.appendChild(option);
