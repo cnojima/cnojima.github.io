@@ -5,6 +5,7 @@ import { extractHostname } from './utils.js';
 
 export const canGetOtp = sdkUrl => (sdkUrl.indexOf('vbox') > -1);
 
+const useProxy = false;
 
 export async function getOTP() {
   console.info('attempting to retrieve OTP code via API');
@@ -23,7 +24,7 @@ export async function getOTP() {
   // Make indirect call to get OTP
   const options = {
     method: 'GET',
-    url: `${proxy}?url=${url}`,
+    url: useProxy ? `${proxy}?url=${url}` : url,
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json; charset=UTF-8',
