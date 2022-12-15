@@ -11,7 +11,8 @@
     "codegen": "npx playwright codegen ",
     "generate-data-444": "node playwright/vbox444.js",
     "sanity": "xk6-browser run --out json=metrics.json sanity.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "start:devwkspce": "npm run start"
   },
   "keywords": [
     "SRC"
