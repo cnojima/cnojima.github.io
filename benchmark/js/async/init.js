@@ -1,8 +1,18 @@
 import { catchErr, gel } from "../helpers/utils.js";
 import { benchmark, initData } from "../stubs/data.js";
+import merchantApIKeys from '../helpers/merchantApiKeys.js';
 
-export async function init(adapter, startTime) {
+export async function init(adapter, key, startTime) {
   console.log('[init] start');
+  
+  // overload apikey for qa.perf
+  const genericKey = key.replace(/SDKv[0-9].*$/i, '').trim();
+  const apikey = merchantApIKeys?.[genericKey];
+
+  if (apikey) {
+    initData.apikey = apikey;
+  }
+
 
   await adapter.init(initData).then((response) => {
     const endTime = Date.now();

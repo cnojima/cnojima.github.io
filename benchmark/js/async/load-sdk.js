@@ -55,7 +55,7 @@ export const loadSdk = function() {
       const adapter = new vcoAdapter();
       
       // init
-      await init(adapter, loadStart).catch(catchErr);
+      await init(adapter, key, loadStart).catch(catchErr);
       updateBenchmarks();
       
       // isRecognized
