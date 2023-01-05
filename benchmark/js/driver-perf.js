@@ -12,4 +12,4 @@ if (lsEmail) {
 }
 
 buildSdkPicker();
-bindComplianceToggle();
+bindComplianceToggle(); // full automation - do direct to configured env.
