@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+bash ./build-for-github.sh
 
 echo "Copying master files & artifacts"
 cp ../src-benchmark/benchmark/index.html ./benchmark/
