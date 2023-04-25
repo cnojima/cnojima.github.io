@@ -1,0 +1,145 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  /* display: flex; */
+}
+.error {
+  color: #cc0000;
+}
+pre.error {
+  color: #a87732;
+}
+.json {
+  border: 1px solid #ff0000;
+}
+.textarea,
+.jsoncontent {
+  width: 49%;
+  height: 200px;
+  border: 1px solid #ff0000;
+}
+
+.benchmark_data {
+  /* position: fixed;
+  left: 300px;
+  top: 0px; */
+  width: 400px;
+  height: 230px;
+}
+
+.required_options {
+  margin: 0 0 10px;
+}
+
+input[type="email"] {
+  width: 400px;
+}
+
+select,
+select[multiple] {
+  width: 400px;
+}
+
+.progress {
+  display: block;
+}
+
+div.required label,
+/* div.required label :first-child, */
+div.progress label {
+  display: block;
+  margin: 10px 0;
+}
+
+/* disables */
+body.disable-ui #emailInput,
+body.disable-ui #email_historical,
+body.disable-ui #compliance_toggle,
+body.disable-ui #sdk_picker_v1,
+body.disable-ui #sdk_picker_v2,
+body.disable-ui #sdk_picker_v3 {
+  pointer-events: none;
+  color: #cccccc;
+  background-color: #666666;
+}
+
+/* label,
+label input,
+label select {
+  display: flexbox;
+} */
+
+
+div label.sub_flow {
+  margin-left: 20px;
+}
+
+
+#config_box {
+  position: fixed;
+  top: 25px;
+  left: 25px;
+  background-color: #cccccc;
+}
+
+#config_box,
+#config {
+  display: block;
+  width: 900px;
+  height: 850px;
+}
+#config {
+  height: 820px;
+  width: 893px;
+}
+#config_box .buttons {
+  text-align: right;
+}
+
+
+
+
+#pan_entry {
+  display: none;
+}
+#pan_json {
+  width: 400px;
+  height: 200px;
+  font-family: monospace;
+}
+
+.toggle-wrapper .toggle-header {
+  cursor: pointer;
+}
+
+.toggle-wrapper i {
+  display: block;
+  height: 20px;
+  width: 20px;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  float: left;
+}
+
+.toggle-wrapper i.up {
+  background-image: url("data:image/svg+xml;base64, PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPgo8c3ZnIHdpZHRoPSI4MDBweCIgaGVpZ2h0PSI4MDBweCIgdmlld0JveD0iMCAwIDE4IDE4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxwYXRoIGZpbGw9IiM0OTRjNGUiIGQ9Ik0xMy43IDEwLjI5bC00LTRhMS4wMTIgMS4wMTIgMCAwIDAtMS40MTggMGwtNCA0QTEgMSAwIDAgMCA1LjAwNyAxMkgxM2ExIDEgMCAwIDAgLjctMS43MXoiLz4KPC9zdmc+");
+}
+
+.toggle-wrapper .toggle-here {
+  display: none;
+}
+.toggle-wrapper.open .toggle-here {
+  display: block;
+}
+.toggle-wrapper.open i.up {
+  /* transform: rotate(180); */
+  rotate: 180deg;
+}
+
+.toggle-here textarea {
+  width: 400px; 
+}
+
+
+#bin_selector {
+  display: none;
+}

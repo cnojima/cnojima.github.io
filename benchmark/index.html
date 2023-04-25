@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>SRC Headless Benchmark Tool</title>
+  <link rel="stylesheet" type="text/css" href="css/solarized.css" />
+  <link rel="stylesheet" type="text/css" href="css/benchmark.css" />
+</head>
+
+<body>
+  <div class="required_options">
+    <label>
+      <input type="checkbox" id="automate" value="true" />
+      Re-run Scenario Every 30s
+      <span id="timer"></span>
+    </label>
+  </div>
+
+  <form name="sdk" id="sdk_form" action="javascript:;">
+  <h3>Required</h3>
+  <div class="required" id="pregen"></div>
+
+  <div class="required_options">
+    <label for="#flow_selector">
+      <b>Flow Selector: </b></br>
+      <label>
+        <input type="radio" name="flow_selector" value="add_card" id="add_card_flow" /> Add Card (Enroll for New User)
+      </label>
+      <br/>
+      <label>
+        <input type="radio" name="flow_selector" value="returning" id="returning_flow" /> Use Existing Card
+      </label>
+    </label>
+  </div>
+
+  <div class="required">
+    <label for="#emailInput">
+      <b>Email:</b><br />
+      <input type="email" id="emailInput" placeholder="Enter email address" value="VMe16708882345078473090006@Perftesthsm.com" />
+      <button id="new_user">New</button>
+      <span class="messaging error" id="email_error_message"></span>
+    </label>
+
+    <label for="#email_historical">
+      <b>Prior:</b><br />
+      <select id="email_historical">
+        <option value="">-- stored email addresses --</option>
+      </select>
+    </label>
+
+    <label>
+      <input type="checkbox" id="compliance_toggle" /> Append Compliance Settings
+    </label>
+
+    <div id="pan_entry" class="toggle-wrapper open">
+      <div class="toggle-header">
+        <i class="up"></i> Manual AddCard PAN JSON
+      </div>
+      <div class="toggle-here">
+        <textarea id="pan_json" placeholder="paste JSON from test card API"></textarea>
+      </div>
+    </div>
+  
+    <div id="bin_selector">
+      <b>BIN Range for Add Card</b><br />
+      <select name="bin_range" id="bin_range"></select>
+    </div>
+
+    <label style="display:none;">
+      <div id="config_box">
+        <textarea id="config"></textarea>
+        <div class="buttons">
+          <button id="config_apply">Apply</button>|<button id="config_close">Close</button>
+        </div>
+      </div>
+    </label>
+
+    <label for="#sdk_picker_v3">
+      <b>Visa SDK:</b><br />
+      <select id="sdk_picker_v3" class="sdk-picker"></select>  <button id="go_v3">Go</button>
+    </label>
+  </div>
+  </form>
+
+  <h3>Progress & Benchmarks</h3>
+  <div class="progress">
+    <textarea class="benchmark_data" id="benchmark_data" disabled></textarea>
+
+    <label for="#init_complete">
+      <input type="checkbox" id="init_complete" disabled /> init() <span id="init_complete_timing" class="timing"></span>
+    </label>
+
+    <label for="#is_recognized_complete">
+      <input type="checkbox" id="is_recognized_complete" disabled /> isRecognized() <span id="is_recognized_complete_timing" class="timing"></span>
+    </label>
+
+    <label for="#auth_complete" class="sub_flow">
+      <input type="checkbox" id="auth_complete" disabled /> ID Auth <span id="auth_complete_timing" class="timing"></span>
+      <div id="otp_entry" style="display: none;">
+        <input id="otp_value" placeholder="123456" type="number" pattern="\d*" maxlength="6" /> <input type="button" id="otp_submit" value="Validate OTP" />
+      </div>
+      <div id="auth_breakdown"></div>
+    </label>
+
+    <label for="#get_src_profile_complete">
+      <input type="checkbox" id="get_src_profile_complete" disabled /> getSrcProfile() <span id="get_src_profile_complete_timing" class="timing"></span>
+    </label>
+
+    <label for="#checkout_complete">
+      <input type="checkbox" id="checkout_complete" disabled /> checkout() <span id="checkout_complete_timing" class="timing"></span>
+    </label>
+
+    <label for="#add_card" class="sub_flow">
+      <input type="checkbox" id="add_card" disabled /> addCard() <span id="add_card_complete_timing" class="timing"></span>
+    </label>
+    <label for="#enroll_user" class="sub_flow">
+      <input type="checkbox" id="enroll_user" disabled /> enrollUser() <span id="enroll_user_complete_timing" class="timing"></span>
+    </label>
+
+    <label for="#unbind_complete">
+      <input type="checkbox" id="unbind_complete" disabled /> unbind() <span id="unbind_complete_timing" class="timing"></span>
+    </label>
+
+    <hr />
+
+    <label for="#get_payment_data">
+      <input type="checkbox" id="get_payment_data" disabled /> b2b:getPaymentData() <span id="get_payment_data_timing" class="timing"></span>
+    </label>
+    <label for="#confirmation">
+      <input type="checkbox" id="confirmation" disabled /> b2b:confirmation() <span id="confirmation_timing" class="timing"></span>
+    </label>
+
+    <label class="messaging" id="critical_apis"></label>
+    <label class="messaging" id="checkout_apis"></label>
+  </div>
+
+  <div class="messaging" id="log"></div>
+  <div class="messaging error" id="error_log"></div>
+
+  <div id="done"></div>
+  <script async src="js/main.js"></script>
+  </body>
+</html>
