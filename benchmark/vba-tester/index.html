@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+  <form method="GET">
+    <label>VBA Version: </label>
+    <select name="version" id="version">
+      <option>3.1.4.1</option>
+      <option>3.1.4</option>
+      <option>3.1.3</option>
+      <option>3.1.2</option>
+      <option>2.5.0</option>
+      <option>2.4.0</option>
+    </select>
+    <br />
+    <label>
+      <input id="lite" name="lite" value="true" type="checkbox" />
+      Use LITE version
+    </label>
+    <br />
+    <input type="submit" value="Test VBA" />
+  </form>
+
+  <form id="start_automate" type="submit" method="GET">
+    <input type="hidden" name="automate" value="true" />
+    <input type="submit" value="Start Automated Run" />
+  </form>
+
+  <button id="stop_automate" style="display: none;" onclick="clearAutomation()">Stop Automated Run</button>
+
+  <textarea style="width: 48%; height: 1000px" id="log" disabled>console output</textarea>
+  <textarea style="width: 48%; height: 1000px" id="results" disabled>results</textarea>
+  <script src="./tester.js"></script>
+</body>
+</html>
