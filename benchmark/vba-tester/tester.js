@@ -16,6 +16,7 @@ var VAAPConfig = {
 };
 
 let tokenInterval, count = 0, total = 0, size = 0, inAutomate = false;
+let n0;
 
 const handleQueryParams = () => {
   if (location.search) {
@@ -50,6 +51,9 @@ function timeVbaGetToken() {
     size += vbaToken.length;
 
     const ms = (Date.now() - start);
+    if (!n0) {
+      n0 = ms;
+    }
     total += ms;
     console.log(`[v${config.version} :: ${count}] ${ms}ms || ${tokenLen}`);
     count++;
@@ -67,7 +71,8 @@ function timeVbaGetToken() {
       const persist = (vbaLs) ? JSON.parse(vbaLs) : {};
       persist.ua = navigator.userAgentData || navigator.userAgent;
       persist[`${config.version}-${config.lite === 'true' ? 'lite' : 'full'}`] = {
-        sdkLoadTime: sdkLoadTime || 'n/a',
+        sdkJSDownloadTime: sdkLoadTime || 'n/a',
+        firstGetToken: `${(n0 / 1000).toPrecision(3)}s`,
         averageGetToken: `${(total / 1000 / config.stop).toPrecision(3)}s`,
         averageTokenSize: `${(size / config.stop / 1024).toPrecision(3)}kb`,
         totalGetToken: `${(total / 1000).toPrecision(3)}s`,
