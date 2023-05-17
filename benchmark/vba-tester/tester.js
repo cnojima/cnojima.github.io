@@ -46,7 +46,7 @@ console.log = (s) => {
 function timeVbaGetToken() {
   let start = Date.now();
 
-  VAAP.getToken(vbaToken => {
+  VAAP.getToken(async vbaToken => {
     const tokenLen = `${(vbaToken.length / 1024).toPrecision(3)}kb`;
     size += vbaToken.length;
 
@@ -65,20 +65,27 @@ function timeVbaGetToken() {
 
       const resouces = performance.getEntriesByType('resource');
       const sdk = resouces.pop();
-      const sdkLoadTime = `${(sdk.duration / 1000).toPrecision(3)}s`;
+      const sdkLoadTime = sdk && `${(sdk.duration / 1000).toPrecision(3)}s`;
 
       const vbaLs = localStorage.getItem('vba_stats');
       const persist = (vbaLs) ? JSON.parse(vbaLs) : {};
-      persist.ua = navigator.userAgentData || navigator.userAgent;
-      persist[`${config.version}-${config.lite === 'true' ? 'lite' : 'full'}`] = {
+      const payload = {
         sdkJSDownloadTime: sdkLoadTime || 'n/a',
         firstGetToken: `${(n0 / 1000).toPrecision(3)}s`,
         averageGetToken: `${(total / 1000 / config.stop).toPrecision(3)}s`,
         averageTokenSize: `${(size / config.stop / 1024).toPrecision(3)}kb`,
         totalGetToken: `${(total / 1000).toPrecision(3)}s`,
-      }
+      };
+      persist.ua = navigator.userAgentData || navigator.userAgent;
+      persist[`${config.version}-${config.lite === 'true' ? 'lite' : 'full'}`] = payload;
       localStorage.setItem('vba_stats', JSON.stringify(persist));
       document.getElementById('results').innerHTML = JSON.stringify(persist, null, 2);
+
+      await logEvent(createCorrelationId(), {
+        vbaVersion: config.version,
+        vbaMode: config.lite === 'true' ? 'LITE' : 'FULL',
+        ...payload
+      })
 
       if (inAutomate) {
         window.location = window.location;
