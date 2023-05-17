@@ -68,7 +68,7 @@ function getBrowserName() {
   return browserName;
 }
 
-const logEvent = async (correlationId, payload) => {
+const logEvent = async (correlationId, vbaToken, payload) => {
   return fetch(
     `https://sandbox.secure.checkout.visa.com/logging/logEvent`,
     {
@@ -86,7 +86,10 @@ const logEvent = async (correlationId, payload) => {
         ...payload
       }),
       headers: {
-        'X-CORRELATION-ID': correlationId
+        'Access-Control-Allow-Origin': "*",
+        'Content-Type': 'application/json',
+        'v-c-vaap-token': vbaToken,
+        'X-CORRELATION-ID': correlationId,
       },
     }
   );
