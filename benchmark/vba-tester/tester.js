@@ -65,8 +65,8 @@ function timeVbaGetToken() {
 
       const vbaLs = localStorage.getItem('vba_stats');
       const persist = (vbaLs) ? JSON.parse(vbaLs) : {};
+      persist.ua = navigator.userAgentData || navigator.userAgent;
       persist[`${config.version}-${config.lite === 'true' ? 'lite' : 'full'}`] = {
-        ua: navigator.userAgentData || navigator.userAgent,
         sdkLoadTime: sdkLoadTime || 'n/a',
         averageGetToken: `${(total / 1000 / config.stop).toPrecision(3)}s`,
         averageTokenSize: `${(size / config.stop / 1024).toPrecision(3)}kb`,
