@@ -59,9 +59,15 @@ function timeVbaGetToken() {
       console.log(`Total VBA getToken() time: ${total / 1000}s`);
       console.log(`Average token size: ${(size / config.stop / 1024).toPrecision(3)}kb`);
 
+      const resouces = performance.getEntriesByType('resource');
+      const sdk = resouces.pop();
+      const sdkLoadTime = `${(sdk.duration / 1000).toPrecision(3)}s`;
+
       const vbaLs = localStorage.getItem('vba_stats');
       const persist = (vbaLs) ? JSON.parse(vbaLs) : {};
       persist[`${config.version}-${config.lite === 'true' ? 'lite' : 'full'}`] = {
+        ua: navigator.userAgentData || navigator.userAgent,
+        sdkLoadTime: sdkLoadTime || 'n/a',
         averageGetToken: `${(total / 1000 / config.stop).toPrecision(3)}s`,
         averageTokenSize: `${(size / config.stop / 1024).toPrecision(3)}kb`,
         totalGetToken: `${(total / 1000).toPrecision(3)}s`,
@@ -112,6 +118,8 @@ const loadScript = version => {
   js.src = `./vba-${version}.min.js`;
   js.addEventListener('load', e => {
     tokenInterval = setInterval(timeVbaGetToken, 250);
+
+
   });
   document.body.appendChild(js);
   console.log(` - loading VBA script: ${js.src}`);
