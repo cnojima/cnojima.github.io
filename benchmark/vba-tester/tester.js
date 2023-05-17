@@ -81,11 +81,11 @@ function timeVbaGetToken() {
       localStorage.setItem('vba_stats', JSON.stringify(persist));
       document.getElementById('results').innerHTML = JSON.stringify(persist, null, 2);
 
-      await logEvent(createCorrelationId(), vbaToken, {
-        vbaVersion: config.version,
-        vbaMode: config.lite === 'true' ? 'LITE' : 'FULL',
-        ...payload
-      })
+      // await logEvent(createCorrelationId(), vbaToken, {
+      //   vbaVersion: config.version,
+      //   vbaMode: config.lite === 'true' ? 'LITE' : 'FULL',
+      //   ...payload
+      // })
 
       if (inAutomate) {
         window.location = window.location;

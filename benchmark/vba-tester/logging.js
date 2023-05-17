@@ -87,6 +87,7 @@ const logEvent = async (correlationId, vbaToken, payload) => {
       }),
       headers: {
         'Access-Control-Allow-Origin': "*",
+        'Cache-Control': 'no-cache',
         'Content-Type': 'application/json',
         'v-c-vaap-token': vbaToken,
         'X-CORRELATION-ID': correlationId,
