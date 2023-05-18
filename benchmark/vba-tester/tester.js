@@ -127,7 +127,7 @@ const loadScript = version => {
 
   const js = document.createElement('script');
   js.id = 'vba_script';
-  js.src = `./vba-${version}.min.js`;
+  js.src = `./vba-${version}.min.js?ts=${Date.now()}`;
   js.addEventListener('load', e => {
     tokenInterval = setInterval(timeVbaGetToken, 250);
 
