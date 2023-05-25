@@ -47,7 +47,7 @@ function timeVbaGetToken() {
   let start = Date.now();
 
   VAAP.getToken(async vbaToken => {
-    const tokenLen = `${(vbaToken.length / 1024).toPrecision(3)}kb`;
+    const tokenBytes = `${(new Blob([vbaToken]).size / 1024).toPrecision(3)}kb`;
     size += vbaToken.length;
 
     const ms = (Date.now() - start);
@@ -55,7 +55,7 @@ function timeVbaGetToken() {
       n0 = ms;
     }
     total += ms;
-    console.log(`[v${config.version} :: ${count}] ${ms}ms || ${tokenLen}`);
+    console.log(`[v${config.version} :: ${count}] ${ms}ms || ${tokenBytes}`);
     count++;
 
     if (count >= config.stop) {

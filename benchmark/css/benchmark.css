@@ -146,3 +146,13 @@ div label.sub_flow {
   flex-grow: 1;
   width: 45%;
 }
+
+.pass-fail {
+  font-weight: 600;
+}
+.pass-fail.pass {
+  color: #1f872d;
+}
+.pass-fail.fail {
+  color: #f60000;
+}

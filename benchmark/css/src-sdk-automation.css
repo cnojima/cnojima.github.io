@@ -1,0 +1,224 @@
+
+
+
+
+#emailAddress {
+  margin: auto;
+  margin-left: 300px;
+  width: 550px;
+}
+
+#Btn {
+  background-color: rgb(0, 62, 169);
+  color: white;
+  padding: 5px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+}
+
+#Btn:hover {
+  background: rgb(0, 62, 169);
+  cursor: pointer;
+  filter: brightness(1.2);
+}
+
+.cta-button {
+  background-color: rgb(0, 62, 169);
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0px;
+  cursor: pointer;
+  font-weight: bold;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  width: 170px;
+}
+
+.cta-button:hover {
+  background: rgb(0, 62, 169);
+  cursor: pointer;
+  filter: brightness(1.2);
+}
+
+.container {
+  padding: 16px;
+}
+
+.select-editable {
+  position: relative;
+  background-color: white;
+  width: 120px;
+  height: 18px;
+}
+
+.select-editable select {
+  top: 0px;
+  left: 0px;
+  font-size: 14px;
+  width: 600px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 2px solid #ccc;
+  box-sizing: border-box;
+  height: 30px;
+}
+
+.select-editable input {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 580px;
+  padding: 1px;
+  font-size: 12px;
+  border: none;
+}
+
+#email {
+  top: 0px;
+  left: 2px;
+  width: 400px;
+  height: 28px;
+  font-size: large;
+  padding: 1px;
+  border: 2px solid #ccc;
+}
+
+.select-editable select:focus,
+.select-editable input:focus {
+  outline: none;
+}
+
+#sdkList {
+  padding: 15px;
+  left: 180px;
+  border: 1px solid saddlebrown;
+}
+
+.disabledbutton {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* Card List dropdown */
+
+.dropdown-content {
+  background-color: #f9f9f9;
+  max-width: 400px;
+  min-height: 40px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); 
+  z-index: 1;
+  display: block;
+}
+
+img {
+  border-radius: 5px;
+  height: 46px;
+  width: 73px;
+}
+
+.v-list {
+  border-bottom: 1px solid #d7d7de; 
+  -ms-flex-direction: row;
+  flex-direction: row;
+  margin: 0 16px;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.a-list {
+  border-bottom: 1px solid #d7d7de; 
+  -ms-flex-direction: row;
+  flex-direction: row;
+  margin: 0 16px;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.v-list:hover {
+  background-color: #f1f1f1
+}
+
+.ccd-container:hover {
+  background-color: #f1f1f1
+}
+
+.ccd-container {
+  display: flex;
+  font-family: Open Sans,Arial,Helvetica,sans-serif;
+  font-size: .875rem;
+  padding: 12px 6px;
+  justify-content: center;
+}
+
+.ccd-container .card-art-container {
+  height: 46px;
+}
+
+.ccd-container .card-info-container {
+  align-items: flex-start;
+  display: flex;
+  flex: 1 1;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 16px;
+}
+
+button.btn {
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  width: 100%;
+}
+
+.DropdownCardList {
+  margin-left: 160px;
+  display: flex;
+}
+
+.UICardList {
+  width: 350px;
+}
+
+/* Tab testing */
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: rgb(90, 137, 216);
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
